@@ -7,118 +7,72 @@ html {
   font-family: "Mona Sans", sans-serif !important;
   line-height: 1.4;
 }
-
-.uk-navbar-nav {
-  margin-right: 20px !important;
+.uk-navbar-container:not(.uk-navbar-transparent) {
+  background: none !important;
 }
-.uk-navbar-nav img {
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
-  object-fit: cover;
-}
-.d-flex {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.uk-navbar-left {
   gap: 10px;
 }
-
-.uk-offcanvas-bar {
-  background-color: #f8f8f8;
-  color: #333;
+.uk-navbar-left a {
+  color: #444ce7;
+  font-weight: 700;
 }
-
-.uk-offcanvas-close {
-  color: #333;
+.uk-navbar-left a:hover {
+  color: #444ce7;
 }
-
-.uk-nav-default li a {
-  padding: 15px 20px;
-  transition: background-color 0.3s;
-  color: #333 !important;
+.category {
+  margin: 20px auto;
+  width: 100%;
 }
-
-.uk-nav-default li a:hover {
-  background-color: #e2e6ea;
-  color: #0056b3;
+.category__wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-
-h3 {
-  color: #0056b3;
-  border-bottom: 2px solid #0056b3;
-  padding-bottom: 10px;
-  color: #333 !important;
-}
-/* Custom Scrollbar */
-#offcanvas-nav .uk-offcanvas-bar {
-  overflow-y: auto;
-}
-
-#offcanvas-nav .uk-offcanvas-bar::-webkit-scrollbar {
-  width: 4px;
-}
-
-#offcanvas-nav .uk-offcanvas-bar::-webkit-scrollbar-thumb {
-  background-color: #888;
+.category > div {
   border-radius: 10px;
-  border: 2px solid #f1f1f1;
 }
-
-#offcanvas-nav .uk-offcanvas-bar::-webkit-scrollbar-thumb:hover {
-  background-color: #555;
+.category__description {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 }
-
-#offcanvas-nav .uk-offcanvas-bar {
-  scrollbar-width: thin;
-  scrollbar-color: #888 #f1f1f1;
+.category__description h1 {
+  color: #444ce7;
+  font-weight: 700;
+  margin-bottom: 10px;
 }
-
-#offcanvas-nav .uk-offcanvas-bar:hover {
-  scrollbar-color: #555 #f1f1f1;
+.category__description p {
+  color: #4a4f63;
+  margin: 10px 0;
 }
-/* Custom styling for the DataTables search input */
-.dataTables_wrapper .dataTables_filter input {
-  border: 1px solid #ccc;
-  padding: 8px 15px;
-  border-radius: 4px;
+.category__option {
+  padding: 10px 20px;
+}
+.category__option .uk-card {
+  padding: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.category__option .uk-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #444ce7;
+}
+.category__option .uk-card p {
   font-size: 14px;
-  width: auto;
-  max-width: 300px;
-  outline: none;
-  transition: border 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 10px;
 }
-.dataTables_wrapper .dataTables_filter input {
-  padding: 5px 10px !important;
-  border: none !important;
-  outline: none !important;
-  border: 1px solid #888 !important;
-  font-size: 16px !important;
-  font-family: "Mona Sans", sans-serif !important;
-  margin-left: 10px !important;
+.uk-heading-small {
+  color: #444ce7;
+  font-weight: 700;
+  font-size: 23px;
 }
-.dataTables_wrapper .dataTables_length select {
-  font-family: "Mona Sans", sans-serif !important;
+.uk-navbar-nav .uk-active {
+  font-weight: bold;
 }
-main {
-  min-height: 70vh;
-}
-
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f4f4f4;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
+.uk-navbar-nav > li.uk-active > a {
+  color: #444ce7 !important;
 }

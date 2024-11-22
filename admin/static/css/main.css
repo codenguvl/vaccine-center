@@ -1,0 +1,124 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body,
+html {
+  font-family: "Mona Sans", sans-serif !important;
+  line-height: 1.4;
+}
+
+.uk-navbar-nav {
+  margin-right: 20px !important;
+}
+.uk-navbar-nav img {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
+}
+.d-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.uk-offcanvas-bar {
+  background-color: #f8f8f8;
+  color: #333;
+}
+
+.uk-offcanvas-close {
+  color: #333;
+}
+
+.uk-nav-default li a {
+  padding: 15px 20px;
+  transition: background-color 0.3s;
+  color: #333 !important;
+}
+
+.uk-nav-default li a:hover {
+  background-color: #e2e6ea;
+  color: #0056b3;
+}
+
+h3 {
+  color: #0056b3;
+  border-bottom: 2px solid #0056b3;
+  padding-bottom: 10px;
+  color: #333 !important;
+}
+/* Custom Scrollbar */
+#offcanvas-nav .uk-offcanvas-bar {
+  overflow-y: auto;
+}
+
+#offcanvas-nav .uk-offcanvas-bar::-webkit-scrollbar {
+  width: 4px;
+}
+
+#offcanvas-nav .uk-offcanvas-bar::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  border: 2px solid #f1f1f1;
+}
+
+#offcanvas-nav .uk-offcanvas-bar::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+#offcanvas-nav .uk-offcanvas-bar {
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+#offcanvas-nav .uk-offcanvas-bar:hover {
+  scrollbar-color: #555 #f1f1f1;
+}
+/* Custom styling for the DataTables search input */
+.dataTables_wrapper .dataTables_filter input {
+  border: 1px solid #ccc;
+  padding: 8px 15px;
+  border-radius: 4px;
+  font-size: 14px;
+  width: auto;
+  max-width: 300px;
+  outline: none;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+.dataTables_wrapper .dataTables_filter input {
+  padding: 5px 10px !important;
+  border: none !important;
+  outline: none !important;
+  border: 1px solid #888 !important;
+  font-size: 16px !important;
+  font-family: "Mona Sans", sans-serif !important;
+  margin-left: 10px !important;
+}
+.dataTables_wrapper .dataTables_length select {
+  font-family: "Mona Sans", sans-serif !important;
+}
+main {
+  min-height: 70vh;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f4f4f4;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
