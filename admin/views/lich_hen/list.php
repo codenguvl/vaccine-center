@@ -12,15 +12,23 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id'
         $error_message = "Có lỗi xảy ra khi xóa lịch hẹn.";
     }
 }
+
+if (isset($_POST['action']) && $_POST['action'] == 'update_status' && isset($_POST['id'])) {
+    $trang_thai = $_POST['trang_thai'];
+
+    // Sử dụng phương thức mới để cập nhật trạng thái
+    $result = $lich_hen_controller->updateLichHenStatus($_POST['id'], $trang_thai);
+    if ($result) {
+        $success_message = "Cập nhật trạng thái lịch hẹn thành công.";
+        $lich_hen_list = $lich_hen_controller->getAllLichHen();
+    } else {
+        $error_message = "Có lỗi xảy ra khi cập nhật trạng thái lịch hẹn.";
+    }
+}
 ?>
 
 
-<?php if (isset($success_message)): ?>
-<div class="uk-alert-success" uk-alert>
-    <a class="uk-alert-close" uk-close></a>
-    <p><?php echo $success_message; ?></p>
-</div>
-<?php endif; ?>
+
 
 <?php if (isset($error_message)): ?>
 <div class="uk-alert-danger" uk-alert>
@@ -54,7 +62,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id'
     </thead>
     <tbody>
         <?php foreach ($lich_hen_list as $lich_hen): ?>
-        <tr>
+        <tr data-id="<?php echo $lich_hen['lich_hen_id']; ?>">
             <td><?php echo htmlspecialchars($lich_hen['fullname']); ?></td>
             <td><?php echo htmlspecialchars($lich_hen['dienthoai']); ?></td>
             <td><?php echo date('d/m/Y', strtotime($lich_hen['ngay_hen'])); ?></td>
@@ -86,7 +94,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id'
                             break;
                     }
                     ?>
-                <span class="uk-label <?php echo $status_class; ?>"><?php echo $status_text; ?></span>
+                <span class="uk-label <?php echo $status_class; ?> status-text"><?php echo $status_text; ?></span>
             </td>
             <td><?php echo htmlspecialchars($lich_hen['ten_vaccine'] ?? 'Không có'); ?></td>
             <td>
@@ -129,6 +137,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id'
                         <li><a href="javascript:void(0)"
                                 onclick="openDeleteModal('<?php echo $lich_hen['lich_hen_id']; ?>')">Xóa</a></li>
                         <li><a href="javascript:void(0)"
+                                onclick="openUpdateStatusModal('<?php echo $lich_hen['lich_hen_id']; ?>')">Cập nhật
+                                trạng thái</a></li>
+                        <li><a href="javascript:void(0)"
                                 onclick="sendReminder('<?php echo $lich_hen['dienthoai']; ?>', '<?php echo $lich_hen['email']; ?>', '<?php echo $lich_hen['ngay_hen']; ?>', '<?php echo $lich_hen['gio_bat_dau']; ?>')">Gửi
                                 nhắc nhở</a></li>
                     </ul>
@@ -139,6 +150,29 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id'
     </tbody>
 </table>
 
+<!-- Modal cập nhật trạng thái lịch hẹn -->
+<div id="update-status-modal" class="uk-modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Cập nhật trạng thái lịch hẹn</h2>
+        <form id="update-status-form" method="POST" action="index.php?page=lich-hen-list">
+            <input type="hidden" name="action" value="update_status">
+            <input type="hidden" name="id" id="update-status-id" value="">
+            <div class="uk-margin">
+                <label class="uk-form-label" for="trang_thai">Trạng thái</label>
+                <select class="uk-select" name="trang_thai" id="trang_thai" required>
+                    <option value="cho_xac_nhan">Chờ xác nhận</option>
+                    <option value="da_xac_nhan">Đã xác nhận</option>
+                    <option value="da_huy">Đã hủy</option>
+                    <option value="hoan_thanh">Hoàn thành</option>
+                </select>
+            </div>
+            <p class="uk-text-right">
+                <button class="uk-button uk-button-default uk-modal-close" type="button">Hủy</button>
+                <button class="uk-button uk-button-primary" type="submit">Cập nhật</button>
+            </p>
+        </form>
+    </div>
+</div>
 
 <!-- Thêm modal thông báo kết quả gửi SMS -->
 <div id="sms-result-modal" class="uk-modal" uk-modal>
@@ -167,6 +201,32 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id'
 </div>
 
 <script>
+function openUpdateStatusModal(id) {
+    document.getElementById('update-status-id').value = id;
+
+    // Lấy trạng thái hiện tại của lịch hẹn
+    const statusElement = document.querySelector(`#lichHenTable tr[data-id='${id}'] .status-text`);
+    const currentStatus = statusElement ? statusElement.textContent.trim() : '';
+
+    // Map giá trị văn bản trạng thái sang giá trị value của dropdown
+    const statusMapping = {
+        'Chờ xác nhận': 'cho_xac_nhan',
+        'Đã xác nhận': 'da_xac_nhan',
+        'Đã hủy': 'da_huy',
+        'Hoàn thành': 'hoan_thanh'
+    };
+
+    // Tìm giá trị value tương ứng
+    const mappedValue = statusMapping[currentStatus] || '';
+
+    // Thiết lập giá trị cho dropdown
+    const statusSelect = document.getElementById('trang_thai');
+    statusSelect.value = mappedValue;
+
+    UIkit.modal('#update-status-modal').show();
+}
+
+
 function openDeleteModal(id) {
     document.getElementById('delete-id').value = id;
     UIkit.modal('#delete-modal').show();

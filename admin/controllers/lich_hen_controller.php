@@ -92,4 +92,9 @@ class LichHenController
     {
         return $this->lich_hen_model->getLichHenByPhoneOrCCCD($phoneOrCCCD);
     }
+
+    public function updateLichHenStatus($id, $trang_thai)
+    {
+        return $this->lich_hen_model->updateLichHenStatus($id, $trang_thai);
+    }
 }

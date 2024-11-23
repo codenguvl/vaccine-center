@@ -212,4 +212,24 @@ class LichHenModel
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+
+    public function updateLichHenStatus($id, $trang_thai)
+    {
+        $this->conn->begin_transaction();
+        try {
+            // Cập nhật trạng thái lịch hẹn
+            $sql = "UPDATE lich_hen SET trang_thai = ? WHERE lich_hen_id = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("si", $trang_thai, $id);
+            $stmt->execute();
+
+            $this->conn->commit();
+            return true;
+        } catch (Exception $e) {
+            $this->conn->rollback();
+            error_log($e->getMessage());
+            return false;
+        }
+    }
+
 }
