@@ -89,6 +89,12 @@
                 </ul>
             </li>
             <li class="uk-parent">
+                <a href="#" uk-toggle="target: #submenu-dang-ky-tiem-tai-nha">Quản lý Đăng ký tiêm</a>
+                <ul id="submenu-dang-ky-tiem-tai-nha" class="uk-nav-sub" hidden>
+                    <li><a href="index.php?page=dang-ky-tiem-tai-nha-list">Danh sách</a></li>
+                </ul>
+            </li>
+            <li class="uk-parent">
                 <a href="#" uk-toggle="target: #submenu-lich-hen">Quản lý Lịch hẹn</a>
                 <ul id="submenu-lich-hen" class="uk-nav-sub" hidden>
                     <li><a href="index.php?page=lich-hen-list">Danh sách</a></li>

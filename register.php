@@ -1,6 +1,32 @@
 <?php
 ob_start();
 require_once __DIR__ . '/admin/config/mysql_connection.php';
+require_once __DIR__ . '/admin/controllers/dang_ky_tiem_tai_nha_controller.php';
+
+$dangKyController = new DangKyTiemTaiNhaController($conn);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $ho_ten = $_POST['name'];
+    $ngay_sinh = $_POST['dob'];
+    $gioi_tinh = $_POST['gender'];
+    $tinh_thanh = $_POST['province'];
+    $quan_huyen = $_POST['district'];
+    $phuong_xa = $_POST['ward'];
+    $dia_chi = $_POST['address'];
+    $ho_ten_lien_he = $_POST['contact_name'];
+    $quan_he = $_POST['relation'];
+    $dien_thoai_lien_he = $_POST['contact_phone'];
+    $ngay_mong_muon = $_POST['preferred_date'];
+
+    $result = $dangKyController->addDangKy($ho_ten, $ngay_sinh, $gioi_tinh, $tinh_thanh, $quan_huyen, $phuong_xa, $dia_chi, $ho_ten_lien_he, $quan_he, $dien_thoai_lien_he, $ngay_mong_muon);
+
+    if ($result) {
+        $success_message = "Đăng ký thành công!";
+    } else {
+        $error_message = "Đăng ký không thành công. Vui lòng thử lại.";
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -50,10 +76,28 @@ require_once __DIR__ . '/admin/config/mysql_connection.php';
     <?php include('includes/partials/header.php') ?>
 
     <div class="uk-container">
-        <form action="" method="POST" class="uk-margin-bottom">
+        <form action="" method="POST"
+            class="uk-margin-bottom uk-card uk-card-body uk-card-default uk-width-2xlarge uk-margin-auto-left uk-margin-auto-right uk-margin-top">
             <!-- Thông tin người tiêm -->
+            <?php if (isset($success_message)): ?>
+            <div class="uk-alert-success" uk-alert>
+                <a class="uk-alert-close" uk-close></a>
+                <p><?php echo $success_message; ?></p>
+            </div>
+            <?php endif; ?>
+
+            <?php if (isset($error_message)): ?>
+            <div class="uk-alert-danger" uk-alert>
+                <a class="uk-alert-close" uk-close></a>
+                <p><?php echo $error_message; ?></p>
+            </div>
+            <?php endif; ?>
             <fieldset class="uk-fieldset">
-                <legend class="uk-legend">Thông Tin Người Tiêm</legend>
+                <legend class="uk-heading-small uk-text-center">ĐĂNG KÝ & ĐẶT LỊCH TIÊM CHỦNG NGAY</legend>
+                <p class="uk-text-center uk-text-primary">Mời Quý khách đăng ký thông tin tiêm chủng để tiết kiệm thời
+                    gian khi đến
+                    trung tâm làm thủ tục và
+                    hưởng thêm nhiều chính sách ưu đãi khác.</p>
                 <div class="uk-margin">
                     <label for="name" class="uk-form-label">Họ và Tên</label>
                     <input class="uk-input" type="text" id="name" name="name" placeholder="Họ và Tên" required>
@@ -66,15 +110,12 @@ require_once __DIR__ . '/admin/config/mysql_connection.php';
                     <label for="gender" class="uk-form-label">Giới Tính</label>
                     <select class="uk-select" id="gender" name="gender" required>
                         <option value="">Chọn Giới Tính</option>
-                        <option value="male">Nam</option>
-                        <option value="female">Nữ</option>
+                        <option value="nam">Nam</option>
+                        <option value="nu">Nữ</option>
+                        <option value="khac">Khác</option>
                     </select>
                 </div>
-                <div class="uk-margin">
-                    <label for="customer_id" class="uk-form-label">Mã Khách Hàng VNVC (nếu có)</label>
-                    <input class="uk-input" type="text" id="customer_id" name="customer_id"
-                        placeholder="Mã Khách Hàng VNVC">
-                </div>
+
                 <div class="uk-margin">
                     <label for="province" class="uk-form-label">Tỉnh Thành</label>
                     <select class="uk-select" id="province" name="province" required>
@@ -113,9 +154,14 @@ require_once __DIR__ . '/admin/config/mysql_connection.php';
                     <label for="relation" class="uk-form-label">Mối Quan Hệ Với Người Tiêm</label>
                     <select class="uk-select" id="relation" name="relation" required>
                         <option value="">Chọn Mối Quan Hệ</option>
-                        <option value="parent">Bố/Mẹ</option>
-                        <option value="relative">Người Thân</option>
-                        <option value="friend">Bạn Bè</option>
+                        <option value="vo">Vợ</option>
+                        <option value="chong">Chồng</option>
+                        <option value="con">Con</option>
+                        <option value="bo">Bố</option>
+                        <option value="me">Mẹ</option>
+                        <option value="ong">Ông</option>
+                        <option value="ba">Bà</option>
+                        <option value="khac">Khác</option>
                     </select>
                 </div>
                 <div class="uk-margin">
@@ -129,26 +175,90 @@ require_once __DIR__ . '/admin/config/mysql_connection.php';
             <fieldset class="uk-fieldset">
                 <legend class="uk-legend">Thông Tin Dịch Vụ</legend>
                 <div class="uk-margin">
-                    <label for="vaccine_type" class="uk-form-label">Loại Vắc Xin Muốn Đăng Ký</label>
-                    <select class="uk-select" id="vaccine_type" name="vaccine_type" required>
-                        <option value="">Chọn Loại Vắc Xin</option>
-                        <option value="package">Vắc Xin Gói</option>
-                        <option value="single">Vắc Xin Lẻ</option>
-                    </select>
-                </div>
-                <div class="uk-margin">
                     <label for="preferred_date" class="uk-form-label">Ngày Mong Muốn Tiêm</label>
                     <input class="uk-input" type="date" id="preferred_date" name="preferred_date" required>
                 </div>
             </fieldset>
 
             <!-- Submit button -->
-            <button class="uk-button uk-button-primary" type="submit">Đăng Ký Lịch Tiêm</button>
+            <button class="uk-button uk-button-primary uk-align-center uk-width-1-1" type="submit">Đăng Ký Lịch
+                Tiêm</button>
         </form>
     </div>
     <!-- Footer -->
     <?php include('includes/partials/footer.php') ?>
 
 </body>
+<script>
+const provinceSelect = document.getElementById('province');
+const districtSelect = document.getElementById('district');
+const wardSelect = document.getElementById('ward');
+
+// API URLs
+const API_BASE = 'https://open.oapi.vn/location';
+const PROVINCE_API = `${API_BASE}/provinces?page=0&size=30`;
+const DISTRICT_API = `${API_BASE}/districts`;
+const WARD_API = `${API_BASE}/wards`;
+
+// Fetch provinces
+async function fetchProvinces() {
+    const response = await fetch(PROVINCE_API);
+    const data = await response.json();
+    if (data && data.code === 'success') {
+        populateSelect(provinceSelect, data.data, "Chọn Tỉnh Thành");
+    }
+}
+
+// Fetch districts based on provinceId
+async function fetchDistricts(provinceId) {
+    const response = await fetch(`${DISTRICT_API}/${provinceId}?page=0&size=30`);
+    const data = await response.json();
+    if (data && data.code === 'success') {
+        populateSelect(districtSelect, data.data, "Chọn Quận Huyện");
+    }
+}
+
+// Fetch wards based on districtId
+async function fetchWards(districtId) {
+    const response = await fetch(`${WARD_API}/${districtId}?page=0&size=30`);
+    const data = await response.json();
+    if (data && data.code === 'success') {
+        populateSelect(wardSelect, data.data, "Chọn Phường Xã");
+    }
+}
+
+// Populate a select element with options
+function populateSelect(selectElement, data, placeholder) {
+    selectElement.innerHTML = `<option value="">${placeholder}</option>`;
+    data.forEach(item => {
+        const option = document.createElement('option');
+        option.value = item.id;
+        option.textContent = item.name;
+        selectElement.appendChild(option);
+    });
+    selectElement.disabled = false;
+}
+
+// Event listeners
+provinceSelect.addEventListener('change', () => {
+    const provinceId = provinceSelect.value;
+    districtSelect.disabled = true;
+    wardSelect.disabled = true;
+    if (provinceId) {
+        fetchDistricts(provinceId);
+    }
+});
+
+districtSelect.addEventListener('change', () => {
+    const districtId = districtSelect.value;
+    wardSelect.disabled = true;
+    if (districtId) {
+        fetchWards(districtId);
+    }
+});
+
+// Initialize provinces on page load
+fetchProvinces();
+</script>
 
 </html>

@@ -70,6 +70,9 @@ function getBreadcrumbTitle($page)
         'lieu-luong-tiem-list' => 'Danh sách liều lượng tiêm',
         'lieu-luong-tiem-add' => 'Thêm liều lượng tiêm',
         'lieu-luong-tiem-edit' => 'Sửa liều lượng tiêm',
+        // Đăng ký tiêm
+        'dang-ky-tiem-tai-nha-list' => 'Danh sách đăng ký tiêm',
+        'dang-ky-tiem-tai-nha-detail' => 'Chi tiết đăng ký tiêm',
     ];
 
     return isset($titles[$page]) ? $titles[$page] : 'Trang chủ';
@@ -127,6 +130,8 @@ function getParentPage($page)
         // Liều lượng tiêm
         'lieu-luong-tiem-add' => 'lieu-luong-tiem-list',
         'lieu-luong-tiem-edit' => 'lieu-luong-tiem-list',
+        // Đăng ký tiêm
+        'dang-ky-tiem-tai-nha-detail' => 'dang-ky-tiem-tai-nha-list',
     ];
 
     return isset($parents[$page]) ? $parents[$page] : 'home';
@@ -168,15 +173,15 @@ if ($current_page != 'home') {
     <div class="uk-container">
         <ul class="uk-breadcrumb">
             <?php foreach ($breadcrumb as $item): ?>
-            <li <?php echo $item['active'] ? 'class="uk-active"' : ''; ?>>
-                <?php if ($item['active']): ?>
-                <span><?php echo htmlspecialchars($item['title']); ?></span>
-                <?php else: ?>
-                <a href="<?php echo htmlspecialchars($item['link']); ?>">
-                    <?php echo htmlspecialchars($item['title']); ?>
-                </a>
-                <?php endif; ?>
-            </li>
+                <li <?php echo $item['active'] ? 'class="uk-active"' : ''; ?>>
+                    <?php if ($item['active']): ?>
+                        <span><?php echo htmlspecialchars($item['title']); ?></span>
+                    <?php else: ?>
+                        <a href="<?php echo htmlspecialchars($item['link']); ?>">
+                            <?php echo htmlspecialchars($item['title']); ?>
+                        </a>
+                    <?php endif; ?>
+                </li>
             <?php endforeach; ?>
         </ul>
     </div>

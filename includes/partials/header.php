@@ -15,7 +15,7 @@
                             fill="#444ce7" />
                     </g>
                 </svg>
-                <a class="uk-navbar-item uk-logo" href="#">OOPVC</a>
+                <a class="uk-navbar-item uk-logo" href="index.php">OOPVC</a>
             </div>
             <div class="uk-navbar-right">
                 <!-- Navbar for larger screens -->

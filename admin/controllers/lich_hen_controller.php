@@ -87,4 +87,9 @@ class LichHenController
             return false;
         }
     }
+
+    public function getLichHenByPhoneOrCCCD($phoneOrCCCD)
+    {
+        return $this->lich_hen_model->getLichHenByPhoneOrCCCD($phoneOrCCCD);
+    }
 }

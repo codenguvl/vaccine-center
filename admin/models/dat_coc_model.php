@@ -47,4 +47,18 @@ class DatCocModel
         $stmt->bind_param("ssi", $trang_thai, $ghi_chu, $id);
         return $stmt->execute();
     }
+    public function getDatCocByPhoneOrCCCD($phoneOrCCCD)
+    {
+        $sql = "SELECT dc.*, v.ten_vaccine 
+            FROM dat_coc dc 
+            JOIN vaccine v ON dc.vaccine_id = v.vaccin_id 
+            JOIN lich_hen lh ON dc.dat_coc_id = lh.dat_coc_id
+            JOIN khachhang kh ON lh.khachhang_id = kh.khachhang_id
+            WHERE kh.dienthoai = ? OR kh.cccd = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ss", $phoneOrCCCD, $phoneOrCCCD);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }

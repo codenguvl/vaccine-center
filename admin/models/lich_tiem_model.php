@@ -85,4 +85,17 @@ class LichTiemModel
         $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
+    public function getLichTiemByPhoneOrCCCD($phoneOrCCCD)
+    {
+        $sql = "SELECT lt.*, kh.fullname, kh.dienthoai, v.ten_vaccine 
+            FROM lich_tiem lt 
+            JOIN khachhang kh ON lt.khachhang_id = kh.khachhang_id
+            JOIN vaccine v ON lt.vaccin_id = v.vaccin_id
+            WHERE kh.dienthoai = ? OR kh.cccd = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ss", $phoneOrCCCD, $phoneOrCCCD);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }

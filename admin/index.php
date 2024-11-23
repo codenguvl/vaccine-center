@@ -256,6 +256,12 @@ if (!$tai_khoan_controller->isLoggedIn()) {
                         case 'lieu-luong-tiem-edit':
                             include 'views/lieu_luong_tiem/edit.php';
                             break;
+                        case 'dang-ky-tiem-tai-nha-list':
+                            include 'views/dang_ky_tiem_tai_nha/list.php';
+                            break;
+                        case 'dang-ky-tiem-tai-nha-detail':
+                            include 'views/dang_ky_tiem_tai_nha/detail.php';
+                            break;
                         default:
                             include 'views/home.php';
                     }

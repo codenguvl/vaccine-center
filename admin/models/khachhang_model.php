@@ -208,4 +208,26 @@ class KhachHangModel
             return false;
         }
     }
+
+    public function checkKhachHangExists($phoneOrCCCD)
+    {
+        $sql = "SELECT COUNT(*) as count FROM khachhang WHERE dienthoai = ? OR cccd = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ss", $phoneOrCCCD, $phoneOrCCCD);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        return $row['count'] > 0;
+    }
+
+    public function getKhachHangByPhoneOrCCCD($phoneOrCCCD)
+    {
+        $sql = "SELECT * FROM khachhang WHERE dienthoai = ? OR cccd = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ss", $phoneOrCCCD, $phoneOrCCCD);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc(); // Trả về thông tin khách hàng nếu tìm thấy
+    }
+
 }

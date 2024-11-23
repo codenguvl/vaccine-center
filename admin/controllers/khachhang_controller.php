@@ -87,5 +87,14 @@ class KhachHangController
     {
         return $this->khachhang_model->sendReminderEmail($email, $message);
     }
+    public function checkKhachHangExists($phoneOrCCCD)
+    {
+        return $this->khachhang_model->checkKhachHangExists($phoneOrCCCD);
+    }
+
+    public function getKhachHangByPhoneOrCCCD($phoneOrCCCD)
+    {
+        return $this->khachhang_model->getKhachHangByPhoneOrCCCD($phoneOrCCCD);
+    }
 
 }

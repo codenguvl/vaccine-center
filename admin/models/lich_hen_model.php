@@ -196,4 +196,20 @@ class LichHenModel
         }
     }
 
+    public function getLichHenByPhoneOrCCCD($phoneOrCCCD)
+    {
+        $sql = "SELECT lh.*, kh.fullname, kh.dienthoai, kh.email, dc.so_tien_dat_coc, v.ten_vaccine 
+            FROM lich_hen lh 
+            JOIN khachhang kh ON lh.khachhang_id = kh.khachhang_id
+            LEFT JOIN dat_coc dc ON lh.dat_coc_id = dc.dat_coc_id
+            LEFT JOIN vaccine v ON dc.vaccine_id = v.vaccin_id
+            WHERE kh.dienthoai = ? OR kh.cccd = ? 
+            ORDER BY lh.ngay_hen, lh.gio_bat_dau";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ss", $phoneOrCCCD, $phoneOrCCCD);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
 }

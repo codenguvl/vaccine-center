@@ -24,4 +24,8 @@ class DatCocController
     {
         return $this->dat_coc_model->updateDatCoc($id, $trang_thai, $ghi_chu);
     }
+    public function getDatCocByPhoneOrCCCD($phoneOrCCCD)
+    {
+        return $this->dat_coc_model->getDatCocByPhoneOrCCCD($phoneOrCCCD);
+    }
 }

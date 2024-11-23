@@ -35,5 +35,6 @@ class LieuLuongTiemController
     {
         return $this->lieu_luong_tiem_model->deleteLieuLuongTiem($id);
     }
+
 }
 ?>

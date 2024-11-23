@@ -90,4 +90,10 @@ class LichTiemController
             'Lịch tiêm tiếp theo'
         );
     }
+    public function getLichTiemByPhoneOrCCCD($phoneOrCCCD)
+    {
+        // Gọi phương thức từ model thay vì gọi chính nó
+        return $this->lich_tiem_model->getLichTiemByPhoneOrCCCD($phoneOrCCCD);
+    }
+
 }
