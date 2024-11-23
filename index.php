@@ -102,11 +102,12 @@ require_once __DIR__ . '/admin/config/mysql_connection.php';
                                     quản lý các mũi tiêm một cách hiệu quả, chính xác và nhanh chóng.</p>
                             </div>
                         </div>
-                        <div onclick="window.location.href='contact.php'" style="cursor: pointer;">
+                        <div onclick="window.location.href='about.php'" style="cursor: pointer;">
                             <div class="uk-card uk-card-default uk-card-body">
-                                <h3 class="uk-card-title">Liên Hệ</h3>
-                                <p>Kết nối với đội ngũ chăm sóc khách hàng của chúng tôi để nhận được sự hỗ trợ tận tâm
-                                    về các dịch vụ tiêm chủng, thông tin vaccine, và các chương trình ưu đãi.</p>
+                                <h3 class="uk-card-title">Về chúng tôi</h3>
+                                <p>Khám phá thông tin về hệ thống của chúng tôi, cam kết mang lại dịch vụ tiêm chủng
+                                    chất lượng,
+                                    đội ngũ chuyên nghiệp, và những giá trị cốt lõi mà chúng tôi hướng tới.</p>
                             </div>
                         </div>
                     </div>
