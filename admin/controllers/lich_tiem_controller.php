@@ -95,5 +95,8 @@ class LichTiemController
         // Gọi phương thức từ model thay vì gọi chính nó
         return $this->lich_tiem_model->getLichTiemByPhoneOrCCCD($phoneOrCCCD);
     }
-
+    public function getAllLichTiemByKhachHangId($khachhang_id)
+    {
+        return $this->lich_tiem_model->getAllLichTiemByKhachHangId($khachhang_id);
+    }
 }

@@ -133,4 +133,20 @@ class VaccineModel
         }
         return $result;
     }
+
+    public function reduceVaccineQuantity($id)
+    {
+        $sql = "UPDATE vaccine SET so_luong = so_luong - 1 WHERE vaccin_id = ? AND so_luong > 0";
+        $stmt = $this->conn->prepare($sql);
+        if (!$stmt) {
+            error_log("Prepare failed: " . $this->conn->error);
+            return false;
+        }
+        $stmt->bind_param("i", $id);
+        $result = $stmt->execute();
+        if (!$result) {
+            error_log("Execute failed: " . $stmt->error);
+        }
+        return $result;
+    }
 }

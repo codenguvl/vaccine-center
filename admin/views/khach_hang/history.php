@@ -26,7 +26,7 @@ if (!$khachhang) {
 
     <!-- Thông tin cơ bản -->
     <div class="uk-card uk-card-default uk-card-body uk-margin">
-        <h3 class="uk-card-title">Thông tin khách hàng</h3>
+        <h3 class="uk-card-title uk-margin-bottom">Thông tin khách hàng</h3>
         <dl class="uk-description-list">
             <dt>Họ và tên:</dt>
             <dd><?php echo htmlspecialchars($khachhang['fullname']); ?></dd>
@@ -45,25 +45,23 @@ if (!$khachhang) {
         </dl>
     </div>
 
-    <!-- Lịch sử tiêm -->
     <div class="uk-card uk-card-default uk-card-body uk-margin">
-        <h3 class="uk-card-title">Lịch sử tiêm chủng</h3>
-        <table class="uk-table uk-table-striped">
+        <h3 class="uk-card-title uk-margin-bottom">Lịch sử tiêm chủng</h3>
+        <table id="lich_tiem_table" class="uk-table uk-table-striped">
             <thead>
                 <tr>
                     <th>Ngày tiêm</th>
                     <th>Vaccine</th>
                     <th>Lần tiêm</th>
                     <th>Trạng thái</th>
-                    <th>Ghi chú</th>
+                    <th>Bệnh</th> <!-- Thêm cột Bệnh -->
                 </tr>
             </thead>
             <tbody>
                 <?php
-                $lich_tiem_list = $lich_tiem_controller->getAllLichTiem();
+                $lich_tiem_list = $lich_tiem_controller->getAllLichTiemByKhachHangId($khachhang_id); // Sử dụng phương thức mới
                 foreach ($lich_tiem_list as $lich_tiem):
-                    if (isset($lich_tiem['khachhang_id']) && $lich_tiem['khachhang_id'] == $khachhang_id):
-                        ?>
+                    ?>
                 <tr>
                     <td><?php echo isset($lich_tiem['ngay_tiem']) ? htmlspecialchars($lich_tiem['ngay_tiem']) : ''; ?>
                     </td>
@@ -77,10 +75,11 @@ if (!$khachhang) {
                             <?php echo isset($lich_tiem['trang_thai']) && $lich_tiem['trang_thai'] == 'da_tiem' ? 'Đã tiêm' : 'Chờ tiêm'; ?>
                         </span>
                     </td>
-                    <td><?php echo isset($lich_tiem['ghi_chu']) ? htmlspecialchars($lich_tiem['ghi_chu']) : ''; ?></td>
+                    <td><?php echo isset($lich_tiem['ten_benh']) ? htmlspecialchars($lich_tiem['ten_benh']) : ''; ?>
+                    </td>
+                    <!-- Hiển thị tên bệnh -->
                 </tr>
                 <?php
-                    endif;
                 endforeach;
                 ?>
             </tbody>
@@ -90,14 +89,14 @@ if (!$khachhang) {
 
     <!-- Lịch sử đặt hẹn -->
     <div class="uk-card uk-card-default uk-card-body uk-margin">
-        <h3 class="uk-card-title">Lịch sử đặt hẹn</h3>
-        <table class="uk-table uk-table-striped">
+        <h3 class="uk-card-title uk-margin-bottom">Lịch sử đặt hẹn</h3>
+        <table id="lich_hen_table" class="uk-table uk-table-striped">
             <thead>
                 <tr>
                     <th>Ngày hẹn</th>
                     <th>Giờ hẹn</th>
                     <th>Trạng thái</th>
-                    <th>Ghi chú</th>
+                    <!-- <th>Ghi chú</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -111,10 +110,28 @@ if (!$khachhang) {
                     <td><?php echo htmlspecialchars($lich_hen['gio_bat_dau']); ?></td>
                     <td>
                         <span class="uk-badge">
-                            <?php echo htmlspecialchars($lich_hen['trang_thai']); ?>
+                            <?php
+                                    // Hiển thị trạng thái lịch hẹn bằng tiếng Việt
+                                    switch (htmlspecialchars($lich_hen['trang_thai'])) {
+                                        case 'cho_xac_nhan':
+                                            echo 'Chờ xác nhận';
+                                            break;
+                                        case 'da_xac_nhan':
+                                            echo 'Đã xác nhận';
+                                            break;
+                                        case 'da_huy':
+                                            echo 'Đã hủy';
+                                            break;
+                                        case 'hoan_thanh':
+                                            echo 'Hoàn thành';
+                                            break;
+                                        default:
+                                            echo 'Không xác định';
+                                    }
+                                    ?>
                         </span>
                     </td>
-                    <td><?php echo htmlspecialchars($lich_hen['ghi_chu']); ?></td>
+
                 </tr>
                 <?php
                     endif;
@@ -126,8 +143,8 @@ if (!$khachhang) {
 
     <!-- Lịch sử thanh toán -->
     <div class="uk-card uk-card-default uk-card-body uk-margin">
-        <h3 class="uk-card-title">Lịch sử thanh toán</h3>
-        <table class="uk-table uk-table-striped">
+        <h3 class="uk-card-title uk-margin-bottom">Lịch sử thanh toán</h3>
+        <table id="lich_thanh_toan_table" class="uk-table uk-table-striped">
             <thead>
                 <tr>
                     <th>Ngày thanh toán</th>
@@ -151,7 +168,11 @@ if (!$khachhang) {
                     </td>
                     <td>
                         <span class="uk-badge">
-                            <?php echo isset($thanh_toan['trang_thai']) ? htmlspecialchars($thanh_toan['trang_thai']) : ''; ?>
+                            <?php
+                                        // Hiển thị trạng thái thanh toán bằng tiếng Việt
+                                        echo isset($thanh_toan['trang_thai']) ?
+                                            (htmlspecialchars($thanh_toan['trang_thai']) == 'da_thanh_toan' ? 'Đã thanh toán' : 'Chưa thanh toán') : '';
+                                        ?>
                         </span>
                     </td>
                     <td><?php echo isset($thanh_toan['ghi_chu']) ? htmlspecialchars($thanh_toan['ghi_chu']) : ''; ?>
@@ -169,15 +190,14 @@ if (!$khachhang) {
 
     <!-- Lịch sử đặt cọc -->
     <div class="uk-card uk-card-default uk-card-body uk-margin">
-        <h3 class="uk-card-title">Lịch sử đặt cọc</h3>
-        <table class="uk-table uk-table-striped">
+        <h3 class="uk-card-title uk-margin-bottom">Lịch sử đặt cọc</h3>
+        <table id="lich_dat_coc_table" class="uk-table uk-table-striped">
             <thead>
                 <tr>
                     <th>Ngày đặt cọc</th>
                     <th>Vaccine</th>
                     <th>Số tiền đặt cọc</th>
-                    <th>Trạng thái</th>
-                    <th>Ghi chú</th>
+                    <!-- <th>Ghi chú</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -195,12 +215,8 @@ if (!$khachhang) {
                     </td>
                     <td><?php echo isset($dat_coc['so_tien_dat_coc']) ? number_format($dat_coc['so_tien_dat_coc'], 0, ',', '.') . ' VNĐ' : ''; ?>
                     </td>
-                    <td>
-                        <span class="uk-badge">
-                            <?php echo isset($dat_coc['trang_thai']) ? htmlspecialchars($dat_coc['trang_thai']) : ''; ?>
-                        </span>
-                    </td>
-                    <td><?php echo isset($dat_coc['ghi_chu']) ? htmlspecialchars($dat_coc['ghi_chu']) : ''; ?></td>
+
+
                 </tr>
                 <?php
                         endif;
@@ -212,9 +228,6 @@ if (!$khachhang) {
     </div>
 
 
-    <div class="uk-margin">
-        <a href="index.php?page=khach-hang-list" class="uk-button uk-button-default">Quay lại danh sách</a>
-    </div>
 </div>
 
 <style>
@@ -231,3 +244,12 @@ if (!$khachhang) {
     background-color: #faa05a;
 }
 </style>
+
+<script>
+$(document).ready(function() {
+    $('#lich_tiem_table').DataTable();
+    $('#lich_hen_table').DataTable();
+    $('#lich_thanh_toan_table').DataTable();
+    $('#lich_dat_coc_table').DataTable();
+});
+</script>

@@ -16,17 +16,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id'
 ?>
 
 <?php if (isset($success_message)): ?>
-    <div class="uk-alert-success" uk-alert>
-        <a class="uk-alert-close" uk-close></a>
-        <p><?php echo $success_message; ?></p>
-    </div>
+<div class="uk-alert-success" uk-alert>
+    <a class="uk-alert-close" uk-close></a>
+    <p><?php echo $success_message; ?></p>
+</div>
 <?php endif; ?>
 
 <?php if (isset($error_message)): ?>
-    <div class="uk-alert-danger" uk-alert>
-        <a class="uk-alert-close" uk-close></a>
-        <p><?php echo $error_message; ?></p>
-    </div>
+<div class="uk-alert-danger" uk-alert>
+    <a class="uk-alert-close" uk-close></a>
+    <p><?php echo $error_message; ?></p>
+</div>
 <?php endif; ?>
 
 <a href="index.php?page=khach-hang-add" class="uk-button uk-button-primary uk-margin-bottom">Thêm Khách hàng mới</a>
@@ -45,22 +45,22 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id'
     </thead>
     <tbody>
         <?php foreach ($khachhang_list as $khachhang): ?>
-            <tr>
-                <td><?php echo htmlspecialchars($khachhang['fullname']); ?></td>
-                <td><?php echo htmlspecialchars($khachhang['cccd']); ?></td>
-                <td><?php echo htmlspecialchars($khachhang['ngaysinh']); ?></td>
-                <td><?php echo htmlspecialchars($khachhang['gioitinh']); ?></td>
-                <td><?php echo htmlspecialchars($khachhang['dienthoai']); ?></td>
-                <td><?php echo htmlspecialchars($khachhang['diachi']); ?></td>
-                <td>
-                    <a href="index.php?page=khach-hang-edit&id=<?php echo htmlspecialchars($khachhang['khachhang_id']); ?>"
-                        class="uk-button uk-button-primary uk-button-small">Sửa</a>
-                    <button class="uk-button uk-button-danger uk-button-small"
-                        onclick="openDeleteModal('<?php echo htmlspecialchars($khachhang['khachhang_id']); ?>')">Xóa</button>
-                    <a href="index.php?page=khach-hang-history&id=<?php echo htmlspecialchars($khachhang['khachhang_id']); ?>"
-                        class="uk-button uk-button-secondary uk-button-small">Lịch sử</a>
-                </td>
-            </tr>
+        <tr>
+            <td><?php echo htmlspecialchars($khachhang['fullname']); ?></td>
+            <td><?php echo htmlspecialchars($khachhang['cccd']); ?></td>
+            <td><?php echo htmlspecialchars($khachhang['ngaysinh']); ?></td>
+            <td><?php echo htmlspecialchars($khachhang['gioitinh']); ?></td>
+            <td><?php echo htmlspecialchars($khachhang['dienthoai']); ?></td>
+            <td><?php echo htmlspecialchars($khachhang['diachi']); ?></td>
+            <td>
+                <a href="index.php?page=khach-hang-edit&id=<?php echo htmlspecialchars($khachhang['khachhang_id']); ?>"
+                    class="uk-button uk-button-primary uk-button-small">Sửa</a>
+                <button class="uk-button uk-button-danger uk-button-small"
+                    onclick="openDeleteModal('<?php echo htmlspecialchars($khachhang['khachhang_id']); ?>')">Xóa</button>
+                <a href="index.php?page=khach-hang-history&id=<?php echo htmlspecialchars($khachhang['khachhang_id']); ?>"
+                    class="uk-button uk-button-secondary uk-button-small">Lịch sử</a>
+            </td>
+        </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
@@ -83,19 +83,19 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id'
 </div>
 
 <script>
-    $(document).ready(function () {
-        $('#khachhang-table').DataTable({
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json' // Ngôn ngữ tiếng Việt
-            },
-            pageLength: 10, // Hiển thị 10 dòng mỗi trang
-            responsive: true // Tự động điều chỉnh giao diện
-        });
+$(document).ready(function() {
+    $('#khachhang-table').DataTable({
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json' // Ngôn ngữ tiếng Việt
+        },
+        pageLength: 10, // Hiển thị 10 dòng mỗi trang
+        responsive: true // Tự động điều chỉnh giao diện
     });
+});
 
-    // Mở modal xác nhận xóa
-    function openDeleteModal(id) {
-        document.getElementById('delete-id').value = id;
-        UIkit.modal('#delete-modal').show();
-    }
+// Mở modal xác nhận xóa
+function openDeleteModal(id) {
+    document.getElementById('delete-id').value = id;
+    UIkit.modal('#delete-modal').show();
+}
 </script>

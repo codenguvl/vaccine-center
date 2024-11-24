@@ -192,3 +192,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <button class="uk-button uk-button-primary" type="submit">Thêm vaccine</button>
 </form>
+<script>
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0];
+
+    document.getElementById('ngay_nhap').value = formattedDate;
+</script>

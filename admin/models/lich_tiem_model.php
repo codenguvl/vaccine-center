@@ -1,4 +1,5 @@
 <?php
+require_once 'vaccine_model.php';
 class LichTiemModel
 {
     private $conn;
@@ -71,11 +72,20 @@ class LichTiemModel
     public function updateLichTiem($id, $khachhang_id, $vaccin_id, $ngay_tiem, $lan_tiem, $trang_thai, $ghi_chu)
     {
         $sql = "UPDATE lich_tiem 
-                SET khachhang_id = ?, vaccin_id = ?, ngay_tiem = ?, lan_tiem = ?, trang_thai = ?, ghi_chu = ? 
-                WHERE lich_tiem_id = ?";
+            SET khachhang_id = ?, vaccin_id = ?, ngay_tiem = ?, lan_tiem = ?, trang_thai = ?, ghi_chu = ? 
+            WHERE lich_tiem_id = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("iisissi", $khachhang_id, $vaccin_id, $ngay_tiem, $lan_tiem, $trang_thai, $ghi_chu, $id);
-        return $stmt->execute();
+
+        $result = $stmt->execute();
+
+        // Check if the update was successful and the status is 'completed'
+        if ($result && $trang_thai === 'da_tiem') {
+            $vaccineModel = new VaccineModel($this->conn);
+            $vaccineModel->reduceVaccineQuantity($vaccin_id); // Reduce the vaccine quantity
+        }
+
+        return $result;
     }
 
     public function deleteLichTiem($id)
@@ -94,6 +104,23 @@ class LichTiemModel
             WHERE kh.dienthoai = ? OR kh.cccd = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("ss", $phoneOrCCCD, $phoneOrCCCD);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+
+    public function getAllLichTiemByKhachHangId($khachhang_id)
+    {
+        $sql = "SELECT lt.*, kh.fullname, kh.dienthoai, v.ten_vaccine, b.ten_benh 
+                FROM lich_tiem lt 
+                JOIN khachhang kh ON lt.khachhang_id = kh.khachhang_id
+                JOIN vaccine v ON lt.vaccin_id = v.vaccin_id 
+                JOIN benh b ON v.benh_id = b.benh_id 
+                WHERE lt.khachhang_id = ? 
+                ORDER BY lt.ngay_tiem DESC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $khachhang_id);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
