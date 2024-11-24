@@ -37,10 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 <?php if (isset($error_message)): ?>
-    <div class="uk-alert-danger" uk-alert>
-        <a class="uk-alert-close" uk-close></a>
-        <p><?php echo $error_message; ?></p>
-    </div>
+<div class="uk-alert-danger" uk-alert>
+    <a class="uk-alert-close" uk-close></a>
+    <p><?php echo $error_message; ?></p>
+</div>
 <?php endif; ?>
 
 <form class="uk-form-stacked" action="index.php?page=lich-tiem-add" method="POST">
@@ -72,9 +72,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <select class="uk-select" id="vaccin_id" name="vaccin_id" required>
                 <option value="">Chọn vaccine</option>
                 <?php foreach ($vaccine_list as $vaccine): ?>
-                    <option value="<?php echo $vaccine['vaccin_id']; ?>">
-                        <?php echo htmlspecialchars($vaccine['ten_vaccine']); ?>
-                    </option>
+                <option value="<?php echo $vaccine['vaccin_id']; ?>">
+                    <?php echo htmlspecialchars($vaccine['ten_vaccine']); ?>
+                </option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -119,57 +119,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </form>
 
 <script>
-    function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
             clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
+            func(...args);
         };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+function searchKhachHang(search_term) {
+    const searchResults = document.getElementById('search_results');
+    const resultsList = searchResults.querySelector('ul');
+
+    if (search_term.length < 2) {
+        UIkit.dropdown(searchResults).hide();
+        return;
     }
 
-    function searchKhachHang(search_term) {
-        const searchResults = document.getElementById('search_results');
-        const resultsList = searchResults.querySelector('ul');
-
-        if (search_term.length < 2) {
-            UIkit.dropdown(searchResults).hide();
-            return;
-        }
-
-        fetch(`ajax/search_khachhang.php?search=${encodeURIComponent(search_term)}`)
-            .then(response => response.json())
-            .then(data => {
-                resultsList.innerHTML = '';
-                if (data.length > 0) {
-                    data.forEach(khachHang => {
-                        const li = document.createElement('li');
-                        li.innerHTML = `
+    fetch(`ajax/search_khachhang.php?search=${encodeURIComponent(search_term)}`)
+        .then(response => response.json())
+        .then(data => {
+            resultsList.innerHTML = '';
+            if (data.length > 0) {
+                data.forEach(khachHang => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
                         <a href="#" onclick="selectKhachHang('${khachHang.khachhang_id}', '${khachHang.fullname}', '${khachHang.dienthoai}', '${khachHang.cccd}'); return false;">
                             ${khachHang.fullname} - SĐT: ${khachHang.dienthoai} ${khachHang.cccd ? '- CCCD: ' + khachHang.cccd : ''}
                         </a>
                     `;
-                        resultsList.appendChild(li);
-                    });
-                    UIkit.dropdown(searchResults).show();
-                } else {
-                    resultsList.innerHTML = '<li><a href="#">Không tìm thấy kết quả</a></li>';
-                    UIkit.dropdown(searchResults).show();
-                }
-            })
-            .catch(error => console.error('Error:', error));
-    }
+                    resultsList.appendChild(li);
+                });
+                UIkit.dropdown(searchResults).show();
+            } else {
+                resultsList.innerHTML = '<li><a href="#">Không tìm thấy kết quả</a></li>';
+                UIkit.dropdown(searchResults).show();
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
 
-    function selectKhachHang(id, name, phone, cccd) {
-        document.getElementById('khachhang_id').value = id;
-        document.getElementById('search_khachhang').value = `${name} - ${phone}`;
+function selectKhachHang(id, name, phone, cccd) {
+    document.getElementById('khachhang_id').value = id;
+    document.getElementById('search_khachhang').value = `${name} - ${phone}`;
 
-        const selectedDiv = document.getElementById('selected_khachhang');
-        selectedDiv.style.display = 'block';
-        selectedDiv.innerHTML = `
+    const selectedDiv = document.getElementById('selected_khachhang');
+    selectedDiv.style.display = 'block';
+    selectedDiv.innerHTML = `
         <div class="uk-text-small">
             <div><strong>Tên:</strong> ${name}</div>
             <div><strong>SĐT:</strong> ${phone}</div>
@@ -177,19 +177,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     `;
 
+    UIkit.dropdown('#search_results').hide();
+}
+
+const debouncedSearch = debounce(searchKhachHang, 300);
+
+document.getElementById('search_khachhang').addEventListener('input', (e) => {
+    debouncedSearch(e.target.value);
+});
+
+// Đóng dropdown khi click ra ngoài
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.uk-inline')) {
         UIkit.dropdown('#search_results').hide();
     }
+});
+</script>
 
-    const debouncedSearch = debounce(searchKhachHang, 300);
-
-    document.getElementById('search_khachhang').addEventListener('input', (e) => {
-        debouncedSearch(e.target.value);
-    });
-
-    // Đóng dropdown khi click ra ngoài
-    document.addEventListener('click', function (e) {
-        if (!e.target.closest('.uk-inline')) {
-            UIkit.dropdown('#search_results').hide();
-        }
-    });
+<script>
+CKEDITOR.replace('ghi_chu');
 </script>

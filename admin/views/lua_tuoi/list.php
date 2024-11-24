@@ -16,17 +16,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id'
 
 
 <?php if (isset($success_message)): ?>
-    <div class="uk-alert-success" uk-alert>
-        <a class="uk-alert-close" uk-close></a>
-        <p><?php echo $success_message; ?></p>
-    </div>
+<div class="uk-alert-success" uk-alert>
+    <a class="uk-alert-close" uk-close></a>
+    <p><?php echo $success_message; ?></p>
+</div>
 <?php endif; ?>
 
 <?php if (isset($error_message)): ?>
-    <div class="uk-alert-danger" uk-alert>
-        <a class="uk-alert-close" uk-close></a>
-        <p><?php echo $error_message; ?></p>
-    </div>
+<div class="uk-alert-danger" uk-alert>
+    <a class="uk-alert-close" uk-close></a>
+    <p><?php echo $error_message; ?></p>
+</div>
 <?php endif; ?>
 
 <a href="index.php?page=lua-tuoi-add" class="uk-button uk-button-primary uk-margin-bottom">Thêm Lứa tuổi mới</a>
@@ -34,21 +34,22 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id'
 <table id="lua-tuoi-table" class="uk-table uk-table-hover uk-table-striped">
     <thead>
         <tr>
-            <th>Mô tả</th>
+            <th>Tên lứa tuổi</th>
+
             <th>Hành động</th>
         </tr>
     </thead>
     <tbody>
         <?php foreach ($lua_tuoi_list as $lua_tuoi): ?>
-            <tr>
-                <td><?php echo htmlspecialchars($lua_tuoi['mo_ta']); ?></td>
-                <td>
-                    <a href="index.php?page=lua-tuoi-edit&id=<?php echo htmlspecialchars($lua_tuoi['lua_tuoi_id']); ?>"
-                        class="uk-button uk-button-primary uk-button-small">Sửa</a>
-                    <button class="uk-button uk-button-danger uk-button-small"
-                        onclick="openDeleteModal('<?php echo htmlspecialchars($lua_tuoi['lua_tuoi_id']); ?>')">Xóa</button>
-                </td>
-            </tr>
+        <tr>
+            <td><?php echo htmlspecialchars($lua_tuoi['ten_lua_tuoi']); ?></td>
+            <td>
+                <a href="index.php?page=lua-tuoi-edit&id=<?php echo htmlspecialchars($lua_tuoi['lua_tuoi_id']); ?>"
+                    class="uk-button uk-button-primary uk-button-small">Sửa</a>
+                <button class="uk-button uk-button-danger uk-button-small"
+                    onclick="openDeleteModal('<?php echo htmlspecialchars($lua_tuoi['lua_tuoi_id']); ?>')">Xóa</button>
+            </td>
+        </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
@@ -70,19 +71,19 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id'
 </div>
 
 <script>
-    function openDeleteModal(id) {
-        document.getElementById('delete-id').value = id;
-        UIkit.modal('#delete-modal').show();
-    }
-    $(document).ready(function () {
-        $('#lua-tuoi-table').DataTable({
-            "paging": true, // Cho phép phân trang
-            "searching": true, // Cho phép tìm kiếm
-            "ordering": true, // Cho phép sắp xếp
-            "info": true, // Hiển thị thông tin tổng số
-            "language": {
-                url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json' // Đổi ngôn ngữ sang tiếng Việt
-            },
-        });
+function openDeleteModal(id) {
+    document.getElementById('delete-id').value = id;
+    UIkit.modal('#delete-modal').show();
+}
+$(document).ready(function() {
+    $('#lua-tuoi-table').DataTable({
+        "paging": true, // Cho phép phân trang
+        "searching": true, // Cho phép tìm kiếm
+        "ordering": true, // Cho phép sắp xếp
+        "info": true, // Hiển thị thông tin tổng số
+        "language": {
+            url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json' // Đổi ngôn ngữ sang tiếng Việt
+        },
     });
+});
 </script>

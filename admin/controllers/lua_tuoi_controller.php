@@ -21,14 +21,13 @@ class LuaTuoiController
         return $this->lua_tuoi_model->getLuaTuoiById($id);
     }
 
-    public function addLuaTuoi($mo_ta)
+    public function addLuaTuoi($ten_lua_tuoi, $mo_ta)
     {
-        return $this->lua_tuoi_model->addLuaTuoi($mo_ta);
+        return $this->lua_tuoi_model->addLuaTuoi($ten_lua_tuoi, $mo_ta);
     }
-
-    public function updateLuaTuoi($id, $mo_ta)
+    public function updateLuaTuoi($id, $ten_lua_tuoi, $mo_ta)
     {
-        return $this->lua_tuoi_model->updateLuaTuoi($id, $mo_ta);
+        return $this->lua_tuoi_model->updateLuaTuoi($id, $ten_lua_tuoi, $mo_ta);
     }
 
     public function deleteLuaTuoi($id)

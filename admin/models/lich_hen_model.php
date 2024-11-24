@@ -15,25 +15,29 @@ class LichHenModel
                 JOIN khachhang kh ON lh.khachhang_id = kh.khachhang_id
                 LEFT JOIN dat_coc dc ON lh.dat_coc_id = dc.dat_coc_id
                 LEFT JOIN vaccine v ON dc.vaccine_id = v.vaccin_id
-                ORDER BY lh.ngay_hen, lh.gio_bat_dau";
+                ORDER BY lh.lich_hen_id DESC";
         $result = $this->conn->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     public function getLichHenById($id)
     {
-        $sql = "SELECT lh.*, kh.fullname, kh.dienthoai, dc.*, v.ten_vaccine, v.gia_tien 
-                FROM lich_hen lh 
-                JOIN khachhang kh ON lh.khachhang_id = kh.khachhang_id
-                LEFT JOIN dat_coc dc ON lh.dat_coc_id = dc.dat_coc_id
-                LEFT JOIN vaccine v ON dc.vaccine_id = v.vaccin_id 
-                WHERE lh.lich_hen_id = ?";
+        $sql = "SELECT lh.*, kh.fullname, kh.dienthoai, dc.*, v.ten_vaccine, v.gia_tien, lh.trang_thai, lh.ghi_chu
+            FROM lich_hen lh 
+            JOIN khachhang kh ON lh.khachhang_id = kh.khachhang_id
+            LEFT JOIN dat_coc dc ON lh.dat_coc_id = dc.dat_coc_id
+            LEFT JOIN vaccine v ON dc.vaccine_id = v.vaccin_id 
+            WHERE lh.lich_hen_id = ?";
+
+
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $result = $stmt->get_result();
+
         return $result->fetch_assoc();
     }
+
 
 
     public function addLichHen($khachhang_id, $ngay_hen, $gio_bat_dau, $gio_ket_thuc, $trang_thai, $ghi_chu, $dat_coc_id = null)

@@ -7,13 +7,13 @@ class ChucNangModel
     {
         $this->conn = $conn;
     }
-
     public function getAllChucNang()
     {
-        $sql = "SELECT * FROM chuc_nang";
+        $sql = "SELECT * FROM chuc_nang ORDER BY id DESC";
         $result = $this->conn->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
 
     public function getChucNangById($id)
     {

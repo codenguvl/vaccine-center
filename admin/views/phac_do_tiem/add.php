@@ -29,10 +29,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 <?php if ($message): ?>
-    <div class="uk-alert-<?php echo $status; ?>" uk-alert>
-        <a class="uk-alert-close" uk-close></a>
-        <p><?php echo $message; ?></p>
-    </div>
+<div class="uk-alert-<?php echo $status; ?>" uk-alert>
+    <a class="uk-alert-close" uk-close></a>
+    <p><?php echo $message; ?></p>
+</div>
 <?php endif; ?>
 
 <form class="uk-form-stacked" action="index.php?page=phac-do-tiem-add" method="POST">
@@ -49,9 +49,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <select class="uk-select" id="lua_tuoi_id" name="lua_tuoi_id" required>
                 <option value="">Chọn lứa tuổi</option>
                 <?php foreach ($lua_tuoi_list as $lua_tuoi): ?>
-                    <option value="<?php echo $lua_tuoi['lua_tuoi_id']; ?>">
-                        <?php echo htmlspecialchars($lua_tuoi['mo_ta']); ?>
-                    </option>
+                <option value="<?php echo $lua_tuoi['lua_tuoi_id']; ?>">
+                    <?php echo htmlspecialchars($lua_tuoi['mo_ta']); ?>
+                </option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -63,9 +63,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <select class="uk-select" id="lieu_luong_id" name="lieu_luong_id" required>
                 <option value="">Chọn liều lượng</option>
                 <?php foreach ($lieu_luong_list as $lieu_luong): ?>
-                    <option value="<?php echo $lieu_luong['lieu_luong_id']; ?>">
-                        <?php echo htmlspecialchars($lieu_luong['mo_ta']); ?>
-                    </option>
+                <option value="<?php echo $lieu_luong['lieu_luong_id']; ?>">
+                    <?php echo htmlspecialchars($lieu_luong['mo_ta']); ?>
+                </option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -97,3 +97,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <a href="index.php?page=phac-do-tiem-list" class="uk-button uk-button-default">Quay lại</a>
     </div>
 </form>
+<script>
+CKEDITOR.replace('lich_tiem');
+CKEDITOR.replace('lieu_nhac');
+CKEDITOR.replace('ghi_chu');
+</script>

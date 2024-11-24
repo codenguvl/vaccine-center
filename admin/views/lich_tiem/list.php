@@ -58,17 +58,17 @@ foreach ($lich_tiem_list as $lich_tiem) {
 
 
 <?php if (isset($success_message)): ?>
-    <div class="uk-alert-success" uk-alert>
-        <a class="uk-alert-close" uk-close></a>
-        <p><?php echo $success_message; ?></p>
-    </div>
+<div class="uk-alert-success" uk-alert>
+    <a class="uk-alert-close" uk-close></a>
+    <p><?php echo $success_message; ?></p>
+</div>
 <?php endif; ?>
 
 <?php if (isset($error_message)): ?>
-    <div class="uk-alert-danger" uk-alert>
-        <a class="uk-alert-close" uk-close></a>
-        <p><?php echo $error_message; ?></p>
-    </div>
+<div class="uk-alert-danger" uk-alert>
+    <a class="uk-alert-close" uk-close></a>
+    <p><?php echo $error_message; ?></p>
+</div>
 <?php endif; ?>
 
 <a href="index.php?page=lich-tiem-add" class="uk-button uk-button-primary uk-margin-bottom">Thêm Lịch tiêm mới</a>
@@ -82,20 +82,19 @@ foreach ($lich_tiem_list as $lich_tiem) {
             <th>Ngày tiêm</th>
             <th>Lần tiêm</th>
             <th>Trạng thái</th>
-            <th>Ghi chú</th>
             <th>Hành động</th>
         </tr>
     </thead>
     <tbody>
         <?php foreach ($lich_tiem_list as $lich_tiem): ?>
-            <tr>
-                <td><?php echo htmlspecialchars($lich_tiem['fullname'] ?? ''); ?></td>
-                <td><?php echo htmlspecialchars($lich_tiem['dienthoai'] ?? ''); ?></td>
-                <td><?php echo htmlspecialchars($lich_tiem['ten_vaccine'] ?? ''); ?></td>
-                <td><?php echo htmlspecialchars($lich_tiem['ngay_tiem'] ?? ''); ?></td>
-                <td><?php echo htmlspecialchars($lich_tiem['lan_tiem'] ?? ''); ?></td>
-                <td>
-                    <?php
+        <tr>
+            <td><?php echo htmlspecialchars($lich_tiem['fullname'] ?? ''); ?></td>
+            <td><?php echo htmlspecialchars($lich_tiem['dienthoai'] ?? ''); ?></td>
+            <td><?php echo htmlspecialchars($lich_tiem['ten_vaccine'] ?? ''); ?></td>
+            <td><?php echo htmlspecialchars($lich_tiem['ngay_tiem'] ?? ''); ?></td>
+            <td><?php echo htmlspecialchars($lich_tiem['lan_tiem'] ?? ''); ?></td>
+            <td>
+                <?php
                     $status_class = '';
                     $status_text = 'Không xác định';
 
@@ -116,50 +115,49 @@ foreach ($lich_tiem_list as $lich_tiem) {
                         }
                     }
                     ?>
-                    <span class="uk-label <?php echo $status_class; ?>"><?php echo $status_text; ?></span>
-                </td>
-                <td><?php echo htmlspecialchars($lich_tiem['ghi_chu'] ?? ''); ?></td>
-                <td>
-                    <!-- Action Dropdown -->
-                    <div class="uk-inline">
-                        <button class="uk-button uk-button-default uk-button-small" type="button"
-                            uk-toggle="target: #action-dropdown-<?php echo htmlspecialchars($lich_tiem['lich_tiem_id'] ?? ''); ?>">
-                            <span uk-icon="icon: more"></span>
-                        </button>
+                <span class="uk-label <?php echo $status_class; ?>"><?php echo $status_text; ?></span>
+            </td>
+            <td>
+                <!-- Action Dropdown -->
+                <div class="uk-inline">
+                    <button class="uk-button uk-button-default uk-button-small" type="button"
+                        uk-toggle="target: #action-dropdown-<?php echo htmlspecialchars($lich_tiem['lich_tiem_id'] ?? ''); ?>">
+                        <span uk-icon="icon: more"></span>
+                    </button>
 
-                        <div id="action-dropdown-<?php echo htmlspecialchars($lich_tiem['lich_tiem_id'] ?? ''); ?>"
-                            uk-dropdown="mode: click">
-                            <ul class="uk-nav uk-dropdown-nav">
-                                <?php if ($lich_tiem['trang_thai'] !== 'da_tiem' && $lich_tiem['trang_thai'] !== 'huy'): ?>
-                                    <li><a href="javascript:void(0);"
-                                            onclick="openStatusModal('<?php echo htmlspecialchars($lich_tiem['lich_tiem_id'] ?? ''); ?>')">Cập
-                                            nhật trạng thái</a></li>
-                                <?php endif; ?>
+                    <div id="action-dropdown-<?php echo htmlspecialchars($lich_tiem['lich_tiem_id'] ?? ''); ?>"
+                        uk-dropdown="mode: click">
+                        <ul class="uk-nav uk-dropdown-nav">
+                            <?php if ($lich_tiem['trang_thai'] !== 'da_tiem' && $lich_tiem['trang_thai'] !== 'huy'): ?>
+                            <li><a href="javascript:void(0);"
+                                    onclick="openStatusModal('<?php echo htmlspecialchars($lich_tiem['lich_tiem_id'] ?? ''); ?>')">Cập
+                                    nhật trạng thái</a></li>
+                            <?php endif; ?>
 
-                                <?php if ($lich_tiem['trang_thai'] === 'da_tiem'): ?>
-                                    <?php if (isset($lich_tiem_phan_ung[$lich_tiem['lich_tiem_id']])): ?>
-                                        <li><a href="javascript:void(0);"
-                                                onclick="openViewPhanUngModal('<?php echo htmlspecialchars($lich_tiem['lich_tiem_id'] ?? ''); ?>')">Xem
-                                                phản ứng</a></li>
-                                    <?php else: ?>
-                                        <li><a href="javascript:void(0);"
-                                                onclick="openPhanUngModal('<?php echo htmlspecialchars($lich_tiem['lich_tiem_id'] ?? ''); ?>', '<?php echo htmlspecialchars($lich_tiem['fullname'] ?? ''); ?>', '<?php echo htmlspecialchars($lich_tiem['ten_vaccine'] ?? ''); ?>')">Ghi
-                                                nhận phản ứng</a></li>
-                                    <?php endif; ?>
-                                <?php endif; ?>
+                            <?php if ($lich_tiem['trang_thai'] === 'da_tiem'): ?>
+                            <?php if (isset($lich_tiem_phan_ung[$lich_tiem['lich_tiem_id']])): ?>
+                            <li><a href="javascript:void(0);"
+                                    onclick="openViewPhanUngModal('<?php echo htmlspecialchars($lich_tiem['lich_tiem_id'] ?? ''); ?>')">Xem
+                                    phản ứng</a></li>
+                            <?php else: ?>
+                            <li><a href="javascript:void(0);"
+                                    onclick="openPhanUngModal('<?php echo htmlspecialchars($lich_tiem['lich_tiem_id'] ?? ''); ?>', '<?php echo htmlspecialchars($lich_tiem['fullname'] ?? ''); ?>', '<?php echo htmlspecialchars($lich_tiem['ten_vaccine'] ?? ''); ?>')">Ghi
+                                    nhận phản ứng</a></li>
+                            <?php endif; ?>
+                            <?php endif; ?>
 
-                                <li><a
-                                        href="index.php?page=lich-tiem-edit&id=<?php echo htmlspecialchars($lich_tiem['lich_tiem_id'] ?? ''); ?>">Sửa</a>
-                                </li>
-                                <li><a href="javascript:void(0);"
-                                        onclick="openDeleteModal('<?php echo htmlspecialchars($lich_tiem['lich_tiem_id'] ?? ''); ?>')">Xóa</a>
-                                </li>
-                            </ul>
-                        </div>
+                            <li><a
+                                    href="index.php?page=lich-tiem-edit&id=<?php echo htmlspecialchars($lich_tiem['lich_tiem_id'] ?? ''); ?>">Sửa</a>
+                            </li>
+                            <li><a href="javascript:void(0);"
+                                    onclick="openDeleteModal('<?php echo htmlspecialchars($lich_tiem['lich_tiem_id'] ?? ''); ?>')">Xóa</a>
+                            </li>
+                        </ul>
                     </div>
-                </td>
+                </div>
+            </td>
 
-            </tr>
+        </tr>
         <?php endforeach; ?>
     </tbody>
 
@@ -264,60 +262,60 @@ foreach ($lich_tiem_list as $lich_tiem) {
 </div>
 
 <script>
-    function openStatusModal(id) {
-        document.getElementById('status-id').value = id;
-        UIkit.modal('#status-modal').show();
-    }
+function openStatusModal(id) {
+    document.getElementById('status-id').value = id;
+    UIkit.modal('#status-modal').show();
+}
 
-    function openDeleteModal(id) {
-        document.getElementById('delete-id').value = id;
-        UIkit.modal('#delete-modal').show();
-    }
+function openDeleteModal(id) {
+    document.getElementById('delete-id').value = id;
+    UIkit.modal('#delete-modal').show();
+}
 
-    function openPhanUngModal(lichTiemId, tenKhachHang, tenVaccine) {
-        document.getElementById('phan-ung-lich-tiem-id').value = lichTiemId;
-        document.getElementById('thong-tin-tiem').innerHTML = `
+function openPhanUngModal(lichTiemId, tenKhachHang, tenVaccine) {
+    document.getElementById('phan-ung-lich-tiem-id').value = lichTiemId;
+    document.getElementById('thong-tin-tiem').innerHTML = `
         <p><strong>Khách hàng:</strong> ${tenKhachHang}</p>
         <p><strong>Vaccine:</strong> ${tenVaccine}</p>
     `;
-        UIkit.modal('#phan-ung-modal').show();
+    UIkit.modal('#phan-ung-modal').show();
+}
+
+// Thêm validation cho form phản ứng
+document.getElementById('phan-ung-form')?.addEventListener('submit', function(e) {
+    const phanUng = document.getElementById('phan_ung').value.trim();
+    const mucDo = document.getElementById('muc_do').value;
+
+    if (!phanUng || !mucDo) {
+        e.preventDefault();
+        UIkit.notification({
+            message: 'Vui lòng điền đầy đủ thông tin bắt buộc',
+            status: 'danger'
+        });
     }
-
-    // Thêm validation cho form phản ứng
-    document.getElementById('phan-ung-form')?.addEventListener('submit', function (e) {
-        const phanUng = document.getElementById('phan_ung').value.trim();
-        const mucDo = document.getElementById('muc_do').value;
-
-        if (!phanUng || !mucDo) {
-            e.preventDefault();
-            UIkit.notification({
-                message: 'Vui lòng điền đầy đủ thông tin bắt buộc',
-                status: 'danger'
-            });
-        }
-    });
+});
 
 
-    // Thêm vào phần script
-    function openViewPhanUngModal(lichTiemId) {
-        const phanUngList = <?php echo json_encode($lich_tiem_phan_ung); ?>;
-        const phanUngInfo = phanUngList[lichTiemId];
+// Thêm vào phần script
+function openViewPhanUngModal(lichTiemId) {
+    const phanUngList = <?php echo json_encode($lich_tiem_phan_ung); ?>;
+    const phanUngInfo = phanUngList[lichTiemId];
 
-        let content = '<div class="uk-margin">';
-        phanUngInfo.forEach(phanUng => {
-            const mucDoClass = {
-                'nhe': 'uk-text-success',
-                'trung_binh': 'uk-text-warning',
-                'nang': 'uk-text-danger'
-            }[phanUng.muc_do] || '';
+    let content = '<div class="uk-margin">';
+    phanUngInfo.forEach(phanUng => {
+        const mucDoClass = {
+            'nhe': 'uk-text-success',
+            'trung_binh': 'uk-text-warning',
+            'nang': 'uk-text-danger'
+        } [phanUng.muc_do] || '';
 
-            const mucDoText = {
-                'nhe': 'Nhẹ',
-                'trung_binh': 'Trung bình',
-                'nang': 'Nặng'
-            }[phanUng.muc_do] || phanUng.muc_do;
+        const mucDoText = {
+            'nhe': 'Nhẹ',
+            'trung_binh': 'Trung bình',
+            'nang': 'Nặng'
+        } [phanUng.muc_do] || phanUng.muc_do;
 
-            content += `
+        content += `
             <div class="uk-card uk-card-default uk-card-body uk-margin-small">
                 <h4>Phản ứng: ${phanUng.phan_ung}</h4>
                 <p class="uk-margin-small"><strong class="${mucDoClass}">Mức độ: ${mucDoText}</strong></p>
@@ -325,51 +323,49 @@ foreach ($lich_tiem_list as $lich_tiem) {
                 ${phanUng.ghi_chu ? `<p class="uk-margin-small"><strong>Ghi chú:</strong> ${phanUng.ghi_chu}</p>` : ''}
             </div>
         `;
+    });
+    content += '</div>';
+
+    document.getElementById('phan-ung-content').innerHTML = content;
+    UIkit.modal('#view-phan-ung-modal').show();
+}
+
+// Cập nhật lại trang sau khi thêm phản ứng thành công
+document.getElementById('phan-ung-form')?.addEventListener('submit', function(e) {
+    const phanUng = document.getElementById('phan_ung').value.trim();
+    const mucDo = document.getElementById('muc_do').value;
+
+    if (!phanUng || !mucDo) {
+        e.preventDefault();
+        UIkit.notification({
+            message: 'Vui lòng điền đầy đủ thông tin bắt buộc',
+            status: 'danger'
         });
-        content += '</div>';
-
-        document.getElementById('phan-ung-content').innerHTML = content;
-        UIkit.modal('#view-phan-ung-modal').show();
+    } else {
+        // Thêm một flag để biết form đã được submit thành công
+        localStorage.setItem('phanUngSubmitted', 'true');
     }
+});
 
-    // Cập nhật lại trang sau khi thêm phản ứng thành công
-    document.getElementById('phan-ung-form')?.addEventListener('submit', function (e) {
-        const phanUng = document.getElementById('phan_ung').value.trim();
-        const mucDo = document.getElementById('muc_do').value;
-
-        if (!phanUng || !mucDo) {
-            e.preventDefault();
-            UIkit.notification({
-                message: 'Vui lòng điền đầy đủ thông tin bắt buộc',
-                status: 'danger'
-            });
-        } else {
-            // Thêm một flag để biết form đã được submit thành công
-            localStorage.setItem('phanUngSubmitted', 'true');
-        }
-    });
-
-    // Kiểm tra và reload trang nếu cần
-    document.addEventListener('DOMContentLoaded', function () {
-        if (localStorage.getItem('phanUngSubmitted')) {
-            localStorage.removeItem('phanUngSubmitted');
-            location.reload();
-        }
-    });
+// Kiểm tra và reload trang nếu cần
+document.addEventListener('DOMContentLoaded', function() {
+    if (localStorage.getItem('phanUngSubmitted')) {
+        localStorage.removeItem('phanUngSubmitted');
+        location.reload();
+    }
+});
 </script>
 
 <script>
-    $(document).ready(function () {
-        $('#lichTiemTable').DataTable({
-            // Các tùy chọn bạn có thể thêm nếu cần
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json" // Hỗ trợ tiếng Việt
-            },
-            "pageLength": 10, // Số dòng mỗi trang
-            "lengthMenu": [5, 10, 25, 50], // Tùy chọn số dòng mỗi trang
-            "order": [
-                [3, "desc"]
-            ] // Sắp xếp theo cột "Ngày tiêm"
-        });
+$(document).ready(function() {
+    $('#lichTiemTable').DataTable({
+        // Các tùy chọn bạn có thể thêm nếu cần
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json" // Hỗ trợ tiếng Việt
+        },
+        "pageLength": 10, // Số dòng mỗi trang
+        "lengthMenu": [5, 10, 25, 50], // Tùy chọn số dòng mỗi trang
+        "order": []
     });
+});
 </script>

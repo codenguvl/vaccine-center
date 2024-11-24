@@ -66,10 +66,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 <?php if (isset($error_message)): ?>
-    <div class="uk-alert-danger" uk-alert>
-        <a class="uk-alert-close" uk-close></a>
-        <p><?php echo $error_message; ?></p>
-    </div>
+<div class="uk-alert-danger" uk-alert>
+    <a class="uk-alert-close" uk-close></a>
+    <p><?php echo $error_message; ?></p>
+</div>
 <?php endif; ?>
 
 <form class="uk-form-stacked" action="index.php?page=lich-hen-add" method="POST">
@@ -141,9 +141,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <select class="uk-select" id="vaccine_id" name="vaccine_id" onchange="calculateDeposit()">
                 <option value="">Chọn vaccine</option>
                 <?php foreach ($vaccine_list as $vaccine): ?>
-                    <option value="<?php echo $vaccine['vaccin_id']; ?>" data-price="<?php echo $vaccine['gia_tien']; ?>">
-                        <?php echo htmlspecialchars($vaccine['ten_vaccine'] . ' - ' . number_format($vaccine['gia_tien'], 0, ',', '.') . ' VNĐ'); ?>
-                    </option>
+                <option value="<?php echo $vaccine['vaccin_id']; ?>" data-price="<?php echo $vaccine['gia_tien']; ?>">
+                    <?php echo htmlspecialchars($vaccine['ten_vaccine'] . ' - ' . number_format($vaccine['gia_tien'], 0, ',', '.') . ' VNĐ'); ?>
+                </option>
                 <?php endforeach; ?>
             </select>
             <div id="deposit_info" class="uk-margin-small-top">
@@ -166,57 +166,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </form>
 
 <script>
-    function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
             clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
+            func(...args);
         };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+// Thay thế toàn bộ phần JavaScript cũ liên quan đến tìm kiếm
+function searchKhachHang(search_term) {
+    const searchResults = document.getElementById('search_results');
+    const resultsList = searchResults.querySelector('ul');
+
+    if (search_term.length < 2) {
+        UIkit.dropdown(searchResults).hide();
+        return;
     }
-    // Thay thế toàn bộ phần JavaScript cũ liên quan đến tìm kiếm
-    function searchKhachHang(search_term) {
-        const searchResults = document.getElementById('search_results');
-        const resultsList = searchResults.querySelector('ul');
 
-        if (search_term.length < 2) {
-            UIkit.dropdown(searchResults).hide();
-            return;
-        }
-
-        fetch(`ajax/search_khachhang.php?search=${encodeURIComponent(search_term)}`)
-            .then(response => response.json())
-            .then(data => {
-                resultsList.innerHTML = '';
-                if (data.length > 0) {
-                    data.forEach(khachHang => {
-                        const li = document.createElement('li');
-                        li.innerHTML = `
+    fetch(`ajax/search_khachhang.php?search=${encodeURIComponent(search_term)}`)
+        .then(response => response.json())
+        .then(data => {
+            resultsList.innerHTML = '';
+            if (data.length > 0) {
+                data.forEach(khachHang => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
                         <a href="#" onclick="selectKhachHang('${khachHang.khachhang_id}', '${khachHang.fullname}', '${khachHang.dienthoai}', '${khachHang.cccd}'); return false;">
                             ${khachHang.fullname} - SĐT: ${khachHang.dienthoai} ${khachHang.cccd ? '- CCCD: ' + khachHang.cccd : ''}
                         </a>
                     `;
-                        resultsList.appendChild(li);
-                    });
-                    UIkit.dropdown(searchResults).show();
-                } else {
-                    resultsList.innerHTML = '<li><a href="#">Không tìm thấy kết quả</a></li>';
-                    UIkit.dropdown(searchResults).show();
-                }
-            })
-            .catch(error => console.error('Error:', error));
-    }
+                    resultsList.appendChild(li);
+                });
+                UIkit.dropdown(searchResults).show();
+            } else {
+                resultsList.innerHTML = '<li><a href="#">Không tìm thấy kết quả</a></li>';
+                UIkit.dropdown(searchResults).show();
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
 
-    function selectKhachHang(id, name, phone, cccd) {
-        document.getElementById('khachhang_id').value = id;
-        document.getElementById('search_khachhang').value = `${name} - ${phone}`;
+function selectKhachHang(id, name, phone, cccd) {
+    document.getElementById('khachhang_id').value = id;
+    document.getElementById('search_khachhang').value = `${name} - ${phone}`;
 
-        const selectedDiv = document.getElementById('selected_khachhang');
-        selectedDiv.style.display = 'block';
-        selectedDiv.innerHTML = `
+    const selectedDiv = document.getElementById('selected_khachhang');
+    selectedDiv.style.display = 'block';
+    selectedDiv.innerHTML = `
         <div class="uk-text-small">
             <div><strong>Tên:</strong> ${name}</div>
             <div><strong>SĐT:</strong> ${phone}</div>
@@ -224,95 +224,99 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     `;
 
+    UIkit.dropdown('#search_results').hide();
+}
+
+// Sử dụng debounce để tránh gọi API quá nhiều
+const debouncedSearch = debounce(searchKhachHang, 300);
+
+document.getElementById('search_khachhang').addEventListener('input', (e) => {
+    debouncedSearch(e.target.value);
+});
+
+// Đóng dropdown khi click ra ngoài
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.uk-inline')) {
         UIkit.dropdown('#search_results').hide();
     }
+});
 
-    // Sử dụng debounce để tránh gọi API quá nhiều
-    const debouncedSearch = debounce(searchKhachHang, 300);
-
-    document.getElementById('search_khachhang').addEventListener('input', (e) => {
-        debouncedSearch(e.target.value);
-    });
-
-    // Đóng dropdown khi click ra ngoài
-    document.addEventListener('click', function (e) {
-        if (!e.target.closest('.uk-inline')) {
-            UIkit.dropdown('#search_results').hide();
-        }
-    });
-
-    // Xử lý khi focus vào ô tìm kiếm
-    document.getElementById('search_khachhang').addEventListener('focus', function () {
-        if (this.value.length >= 2) {
-            searchKhachHang(this.value);
-        }
-    });
-
-
-    function toggleVaccineSelect() {
-        const vaccineSection = document.getElementById('vaccine_section');
-        const vaccineSelect = document.getElementById('vaccine_id');
-        const hasDeposit = document.querySelector('input[name="has_deposit"]').checked;
-
-        vaccineSection.style.display = hasDeposit ? 'block' : 'none';
-        vaccineSelect.required = hasDeposit;
-        if (!hasDeposit) {
-            vaccineSelect.value = '';
-            document.getElementById('deposit_amount').textContent = '';
-        }
+// Xử lý khi focus vào ô tìm kiếm
+document.getElementById('search_khachhang').addEventListener('focus', function() {
+    if (this.value.length >= 2) {
+        searchKhachHang(this.value);
     }
+});
 
-    function calculateDeposit() {
-        const vaccineSelect = document.getElementById('vaccine_id');
-        const depositDiv = document.getElementById('deposit_amount');
 
-        if (vaccineSelect.value) {
-            const selectedOption = vaccineSelect.options[vaccineSelect.selectedIndex];
-            const price = parseFloat(selectedOption.dataset.price);
-            const depositAmount = price * 0.2; // 20%
+function toggleVaccineSelect() {
+    const vaccineSection = document.getElementById('vaccine_section');
+    const vaccineSelect = document.getElementById('vaccine_id');
+    const hasDeposit = document.querySelector('input[name="has_deposit"]').checked;
 
-            depositDiv.innerHTML = `
+    vaccineSection.style.display = hasDeposit ? 'block' : 'none';
+    vaccineSelect.required = hasDeposit;
+    if (!hasDeposit) {
+        vaccineSelect.value = '';
+        document.getElementById('deposit_amount').textContent = '';
+    }
+}
+
+function calculateDeposit() {
+    const vaccineSelect = document.getElementById('vaccine_id');
+    const depositDiv = document.getElementById('deposit_amount');
+
+    if (vaccineSelect.value) {
+        const selectedOption = vaccineSelect.options[vaccineSelect.selectedIndex];
+        const price = parseFloat(selectedOption.dataset.price);
+        const depositAmount = price * 0.2; // 20%
+
+        depositDiv.innerHTML = `
             <div>Giá vaccine: ${number_format(price)} VNĐ</div>
             <div>Số tiền đặt cọc (20%): ${number_format(depositAmount)} VNĐ</div>
         `;
-        } else {
-            depositDiv.textContent = '';
-        }
+    } else {
+        depositDiv.textContent = '';
     }
+}
 
-    function number_format(number) {
-        return new Intl.NumberFormat('vi-VN').format(number);
+function number_format(number) {
+    return new Intl.NumberFormat('vi-VN').format(number);
+}
+
+
+
+document.getElementById('search_khachhang').addEventListener('input', (e) => {
+    debouncedSearch(e.target.value);
+});
+
+document.querySelector('form').addEventListener('submit', function(e) {
+    const gioBatDau = document.getElementById('gio_bat_dau').value;
+    const gioKetThuc = document.getElementById('gio_ket_thuc').value;
+
+    if (gioBatDau >= gioKetThuc) {
+        e.preventDefault();
+        UIkit.notification({
+            message: 'Giờ kết thúc phải sau giờ bắt đầu!',
+            status: 'danger',
+            pos: 'top-center',
+            timeout: 3000
+        });
     }
+});
 
+// Thêm sự kiện để tự động điền giờ kết thúc
+document.getElementById('gio_bat_dau').addEventListener('change', function() {
+    const gioBatDau = new Date('2000-01-01 ' + this.value);
+    const gioKetThuc = new Date(gioBatDau.getTime() + 30 * 60000); // Thêm 30 phút
 
+    let hours = gioKetThuc.getHours().toString().padStart(2, '0');
+    let minutes = gioKetThuc.getMinutes().toString().padStart(2, '0');
 
-    document.getElementById('search_khachhang').addEventListener('input', (e) => {
-        debouncedSearch(e.target.value);
-    });
+    document.getElementById('gio_ket_thuc').value = `${hours}:${minutes}`;
+});
+</script>
 
-    document.querySelector('form').addEventListener('submit', function (e) {
-        const gioBatDau = document.getElementById('gio_bat_dau').value;
-        const gioKetThuc = document.getElementById('gio_ket_thuc').value;
-
-        if (gioBatDau >= gioKetThuc) {
-            e.preventDefault();
-            UIkit.notification({
-                message: 'Giờ kết thúc phải sau giờ bắt đầu!',
-                status: 'danger',
-                pos: 'top-center',
-                timeout: 3000
-            });
-        }
-    });
-
-    // Thêm sự kiện để tự động điền giờ kết thúc
-    document.getElementById('gio_bat_dau').addEventListener('change', function () {
-        const gioBatDau = new Date('2000-01-01 ' + this.value);
-        const gioKetThuc = new Date(gioBatDau.getTime() + 30 * 60000); // Thêm 30 phút
-
-        let hours = gioKetThuc.getHours().toString().padStart(2, '0');
-        let minutes = gioKetThuc.getMinutes().toString().padStart(2, '0');
-
-        document.getElementById('gio_ket_thuc').value = `${hours}:${minutes}`;
-    });
+<script>
+CKEDITOR.replace('ghi_chu');
 </script>

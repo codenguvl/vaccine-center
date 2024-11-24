@@ -9,6 +9,86 @@ if (!$tai_khoan_controller->isLoggedIn()) {
     header('Location: login.php');
     exit;
 }
+function getCustomPageTitle($page)
+{
+    $titles = [
+        'home' => 'Trang chủ',
+        // Profile
+        'profile' => 'Thông tin cá nhân',
+        // Vai trò
+        'vai-tro-list' => 'Danh sách vai trò',
+        'vai-tro-add' => 'Thêm vai trò',
+        'vai-tro-edit' => 'Sửa vai trò',
+        // Chức năng
+        'chuc-nang-list' => 'Danh sách chức năng',
+        'chuc-nang-add' => 'Thêm chức năng',
+        'chuc-nang-edit' => 'Sửa chức năng',
+        // Nhóm vai trò
+        'nhom-vai-tro-list' => 'Danh sách nhóm vai trò',
+        'nhom-vai-tro-add' => 'Thêm nhóm vai trò',
+        'nhom-vai-tro-edit' => 'Sửa nhóm vai trò',
+        // Tài khoản
+        'tai-khoan-list' => 'Danh sách tài khoản',
+        'tai-khoan-add' => 'Thêm tài khoản',
+        'tai-khoan-edit' => 'Sửa tài khoản',
+        // Khách hàng
+        'khach-hang-list' => 'Danh sách khách hàng',
+        'khach-hang-add' => 'Thêm khách hàng',
+        'khach-hang-edit' => 'Sửa khách hàng',
+        'khach-hang-history' => 'Lịch sử khách hàng',
+        // Danh mục bệnh
+        'danh-muc-benh-list' => 'Danh sách danh mục bệnh',
+        'danh-muc-benh-add' => 'Thêm danh mục bệnh',
+        'danh-muc-benh-edit' => 'Sửa danh mục bệnh',
+        // Bệnh
+        'benh-list' => 'Danh sách bệnh',
+        'benh-add' => 'Thêm bệnh',
+        'benh-edit' => 'Sửa bệnh',
+        // Đối tượng tiêm chủng
+        'doi-tuong-tiem-chung-list' => 'Danh sách đối tượng tiêm chủng',
+        'doi-tuong-tiem-chung-add' => 'Thêm đối tượng tiêm chủng',
+        'doi-tuong-tiem-chung-edit' => 'Sửa đối tượng tiêm chủng',
+        // Phác đồ tiêm
+        'phac-do-tiem-list' => 'Danh sách phác đồ tiêm',
+        'phac-do-tiem-add' => 'Thêm phác đồ tiêm',
+        'phac-do-tiem-edit' => 'Sửa phác đồ tiêm',
+        // Điều kiện tiêm
+        'dieu-kien-tiem-list' => 'Danh sách điều kiện tiêm',
+        'dieu-kien-tiem-add' => 'Thêm điều kiện tiêm',
+        'dieu-kien-tiem-edit' => 'Sửa điều kiện tiêm',
+        // Vaccine
+        'vaccine-list' => 'Danh sách vaccine',
+        'vaccine-add' => 'Thêm vaccine',
+        'vaccine-edit' => 'Sửa vaccine',
+        // Lịch hẹn
+        'lich-hen-list' => 'Danh sách lịch hẹn',
+        'lich-hen-add' => 'Thêm lịch hẹn',
+        'lich-hen-edit' => 'Sửa lịch hẹn',
+        // Lịch tiêm
+        'lich-tiem-list' => 'Danh sách lịch tiêm',
+        'lich-tiem-add' => 'Thêm lịch tiêm',
+        'lich-tiem-edit' => 'Sửa lịch tiêm',
+        // Thanh toán
+        'thanh-toan-list' => 'Danh sách thanh toán',
+        'thanh-toan-add' => 'Thêm thanh toán',
+        'thanh-toan-edit' => 'Sửa thanh toán',
+        // Lứa tuổi
+        'lua-tuoi-list' => 'Danh sách lứa tuổi',
+        'lua-tuoi-add' => 'Thêm lứa tuổi',
+        'lua-tuoi-edit' => 'Sửa lứa tuổi',
+        // Liều lượng tiêm
+        'lieu-luong-tiem-list' => 'Danh sách liều lượng tiêm',
+        'lieu-luong-tiem-add' => 'Thêm liều lượng tiêm',
+        'lieu-luong-tiem-edit' => 'Sửa liều lượng tiêm',
+        // Đăng ký tiêm
+        'dang-ky-tiem-tai-nha-list' => 'Danh sách đăng ký tiêm',
+        'dang-ky-tiem-tai-nha-detail' => 'Chi tiết đăng ký tiêm',
+    ];
+    return isset($titles[$page]) ? $titles[$page] : 'Trang chủ';
+}
+
+$current_page = isset($_GET['page']) ? $_GET['page'] : 'home';
+$page_title = getCustomPageTitle($current_page); // Lấy tiêu đề trang riêng
 
 
 ?>
@@ -23,7 +103,12 @@ if (!$tai_khoan_controller->isLoggedIn()) {
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Dashboard</title>
+        <title><?php echo htmlspecialchars($page_title); ?></title>
+
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="icon" href="favicon.ico" type="image/ico">
+
         <!-- UIkit CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.21.13/dist/css/uikit.min.css" />
 
@@ -57,6 +142,9 @@ if (!$tai_khoan_controller->isLoggedIn()) {
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
+        <!-- Text editor -->
+        <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.3.1/ckeditor5.css">
+        <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 
     </head>
     <?php

@@ -56,7 +56,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update_status' && isset($_PO
             <th>Trạng thái</th>
             <th>Vaccine</th>
             <th>Tiền đặt cọc</th>
-            <th>Ghi chú</th>
             <th>Hành động</th>
         </tr>
     </thead>
@@ -104,7 +103,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update_status' && isset($_PO
                 Chưa đặt cọc
                 <?php endif; ?>
             </td>
-            <td><?php echo htmlspecialchars($lich_hen['ghi_chu'] ?? ''); ?></td>
 
 
             <td>
@@ -310,14 +308,14 @@ function sendReminder(phone, email, date, time) {
 
 <script>
 $(document).ready(function() {
+    // Khởi tạo DataTables cho bảng "Đối tượng tiêm chủng"
     $('#lichHenTable').DataTable({
         language: {
-            url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/vi.json" // Giao diện tiếng Việt
+            url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json'
         },
-        paging: true, // Bật phân trang
-        searching: true, // Bật tìm kiếm
-        ordering: true, // Bật sắp xếp
-        info: true, // Hiển thị thông tin số dòng
+        "pageLength": 10,
+        "lengthMenu": [5, 10, 25, 50],
+        "order": []
     });
 });
 

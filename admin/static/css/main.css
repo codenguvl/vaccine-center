@@ -122,3 +122,6 @@ main {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+.cke_notifications_area {
+  display: none !important;
+}

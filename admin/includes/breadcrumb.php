@@ -137,6 +137,13 @@ function getParentPage($page)
     return isset($parents[$page]) ? $parents[$page] : 'home';
 }
 
+
+function getPageTitle($page)
+{
+    return getBreadcrumbTitle($page);
+}
+
+
 $current_page = isset($_GET['page']) ? $_GET['page'] : 'home';
 $breadcrumb = [];
 
@@ -173,15 +180,15 @@ if ($current_page != 'home') {
     <div class="uk-container">
         <ul class="uk-breadcrumb">
             <?php foreach ($breadcrumb as $item): ?>
-                <li <?php echo $item['active'] ? 'class="uk-active"' : ''; ?>>
-                    <?php if ($item['active']): ?>
-                        <span><?php echo htmlspecialchars($item['title']); ?></span>
-                    <?php else: ?>
-                        <a href="<?php echo htmlspecialchars($item['link']); ?>">
-                            <?php echo htmlspecialchars($item['title']); ?>
-                        </a>
-                    <?php endif; ?>
-                </li>
+            <li <?php echo $item['active'] ? 'class="uk-active"' : ''; ?>>
+                <?php if ($item['active']): ?>
+                <span><?php echo htmlspecialchars($item['title']); ?></span>
+                <?php else: ?>
+                <a href="<?php echo htmlspecialchars($item['link']); ?>">
+                    <?php echo htmlspecialchars($item['title']); ?>
+                </a>
+                <?php endif; ?>
+            </li>
             <?php endforeach; ?>
         </ul>
     </div>

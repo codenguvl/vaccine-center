@@ -154,18 +154,20 @@ $has_deposit = !empty($lich_hen['dat_coc_id']);
         </div>
     </div>
 
+
     <div class="uk-margin">
         <label class="uk-form-label" for="trang_thai">Trạng thái:</label>
         <div class="uk-form-controls">
             <select class="uk-select" id="trang_thai" name="trang_thai" required>
                 <option value="cho_xac_nhan"
-                    <?php echo ($lich_hen['trang_thai'] == 'cho_xac_nhan') ? 'selected' : ''; ?>>
-                    Chờ xác nhận</option>
-                <option value="da_xac_nhan" <?php echo ($lich_hen['trang_thai'] == 'da_xac_nhan') ? 'selected' : ''; ?>>
-                    Đã xác nhận</option>
-                <option value="da_huy" <?php echo ($lich_hen['trang_thai'] == 'da_huy') ? 'selected' : ''; ?>>
-                    Đã hủy</option>
-                <option value="hoan_thanh" <?php echo ($lich_hen['trang_thai'] == 'hoan_thanh') ? 'selected' : ''; ?>>
+                    <?php echo ($lich_hen['trang_thai'] === 'cho_xac_nhan') ? 'selected' : ''; ?>>Chờ xác nhận
+                </option>
+                <option value="da_xac_nhan"
+                    <?php echo ($lich_hen['trang_thai'] === 'da_xac_nhan') ? 'selected' : ''; ?>>Đã xác nhận
+                </option>
+                <option value="da_huy" <?php echo ($lich_hen['trang_thai'] === 'da_huy') ? 'selected' : ''; ?>>Đã hủy
+                </option>
+                <option value="hoan_thanh" <?php echo ($lich_hen['trang_thai'] === 'hoan_thanh') ? 'selected' : ''; ?>>
                     Hoàn thành</option>
             </select>
         </div>
@@ -214,7 +216,7 @@ $has_deposit = !empty($lich_hen['dat_coc_id']);
         <label class="uk-form-label" for="ghi_chu">Ghi chú:</label>
         <div class="uk-form-controls">
             <textarea class="uk-textarea" id="ghi_chu" name="ghi_chu"
-                rows="3"><?php echo isset($lich_hen['ghi_chu']) ? htmlspecialchars($lich_hen['ghi_chu']) : ''; ?></textarea>
+                rows="3"><?php echo isset($lich_hen['ghi_chu']) ? $lich_hen['ghi_chu'] : ''; ?></textarea>
         </div>
     </div>
 
@@ -368,4 +370,8 @@ document.getElementById('gio_bat_dau').addEventListener('change', function() {
         document.getElementById('gio_ket_thuc').value = `${hours}:${minutes}`;
     }
 });
+</script>
+
+<script>
+CKEDITOR.replace('ghi_chu');
 </script>

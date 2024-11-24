@@ -10,7 +10,7 @@ class DoiTuongTiemChungModel
 
     public function getAllDoiTuong()
     {
-        $sql = "SELECT * FROM doi_tuong_tiem_chung";
+        $sql = "SELECT * FROM doi_tuong_tiem_chung ORDER BY doi_tuong_id DESC";
         $result = $this->conn->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }

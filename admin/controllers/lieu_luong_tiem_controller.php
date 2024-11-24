@@ -21,14 +21,14 @@ class LieuLuongTiemController
         return $this->lieu_luong_tiem_model->getLieuLuongTiemById($id);
     }
 
-    public function addLieuLuongTiem($mo_ta)
+    public function addLieuLuongTiem($mo_ta, $gia_tri) // Thêm tham số gia_tri
     {
-        return $this->lieu_luong_tiem_model->addLieuLuongTiem($mo_ta);
+        return $this->lieu_luong_tiem_model->addLieuLuongTiem($mo_ta, $gia_tri);
     }
 
-    public function updateLieuLuongTiem($id, $mo_ta)
+    public function updateLieuLuongTiem($id, $mo_ta, $gia_tri) // Thêm tham số gia_tri
     {
-        return $this->lieu_luong_tiem_model->updateLieuLuongTiem($id, $mo_ta);
+        return $this->lieu_luong_tiem_model->updateLieuLuongTiem($id, $mo_ta, $gia_tri);
     }
 
     public function deleteLieuLuongTiem($id)

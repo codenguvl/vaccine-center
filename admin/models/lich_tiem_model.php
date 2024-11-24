@@ -13,7 +13,7 @@ class LichTiemModel
         $sql = "SELECT lt.*, kh.fullname, kh.dienthoai, v.ten_vaccine, v.gia_tien 
                 FROM lich_tiem lt 
                 JOIN khachhang kh ON lt.khachhang_id = kh.khachhang_id
-                JOIN vaccine v ON lt.vaccin_id = v.vaccin_id";
+                JOIN vaccine v ON lt.vaccin_id = v.vaccin_id ORDER BY lt.lich_tiem_id DESC";
         $result = $this->conn->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }

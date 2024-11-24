@@ -269,3 +269,7 @@ function toggleNextDate(checked) {
 // Khởi tạo ban đầu
 toggleNextVaccination(document.getElementById('trang_thai').value);
 </script>
+
+<script>
+CKEDITOR.replace('ghi_chu');
+</script>

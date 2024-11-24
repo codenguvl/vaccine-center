@@ -82,6 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="uk-margin">
         <label class="uk-form-label" for="lich_tiem">Lịch tiêm:</label>
         <div class="uk-form-controls">
+            <!-- CKEditor cho lịch tiêm -->
             <textarea class="uk-textarea" id="lich_tiem" name="lich_tiem" rows="4"
                 required><?php echo isset($phac_do['lich_tiem']) ? htmlspecialchars(trim($phac_do['lich_tiem'])) : ''; ?></textarea>
         </div>
@@ -90,6 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="uk-margin">
         <label class="uk-form-label" for="lieu_nhac">Liều nhắc:</label>
         <div class="uk-form-controls">
+            <!-- CKEditor cho liều nhắc -->
             <textarea class="uk-textarea" id="lieu_nhac" name="lieu_nhac"
                 rows="4"><?php echo isset($phac_do['lieu_nhac']) ? htmlspecialchars(trim($phac_do['lieu_nhac'])) : ''; ?></textarea>
         </div>
@@ -98,6 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="uk-margin">
         <label class="uk-form-label" for="ghi_chu">Ghi chú:</label>
         <div class="uk-form-controls">
+            <!-- CKEditor cho ghi chú -->
             <textarea class="uk-textarea" id="ghi_chu" name="ghi_chu"
                 rows="4"><?php echo isset($phac_do['ghi_chu']) ? htmlspecialchars(trim($phac_do['ghi_chu'])) : ''; ?></textarea>
         </div>
@@ -108,3 +111,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <a href="index.php?page=phac-do-tiem-list" class="uk-button uk-button-default">Quay lại</a>
     </div>
 </form>
+<script>
+CKEDITOR.replace('lich_tiem');
+CKEDITOR.replace('lieu_nhac');
+CKEDITOR.replace('ghi_chu');
+</script>

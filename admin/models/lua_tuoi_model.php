@@ -32,15 +32,15 @@ class LuaTuoiModel
         return $result->fetch_assoc();
     }
 
-    public function addLuaTuoi($mo_ta)
+    public function addLuaTuoi($ten_lua_tuoi, $mo_ta)
     {
-        $sql = "INSERT INTO lua_tuoi (mo_ta) VALUES (?)";
+        $sql = "INSERT INTO lua_tuoi (ten_lua_tuoi, mo_ta) VALUES (?, ?)";
         $stmt = $this->conn->prepare($sql);
         if (!$stmt) {
             error_log("Prepare failed: " . $this->conn->error);
             return false;
         }
-        $stmt->bind_param("s", $mo_ta);
+        $stmt->bind_param("ss", $ten_lua_tuoi, $mo_ta);
         $result = $stmt->execute();
         if (!$result) {
             error_log("Execute failed: " . $stmt->error);
@@ -48,15 +48,15 @@ class LuaTuoiModel
         return $result;
     }
 
-    public function updateLuaTuoi($id, $mo_ta)
+    public function updateLuaTuoi($id, $ten_lua_tuoi, $mo_ta)
     {
-        $sql = "UPDATE lua_tuoi SET mo_ta = ? WHERE lua_tuoi_id = ?";
+        $sql = "UPDATE lua_tuoi SET ten_lua_tuoi = ?, mo_ta = ? WHERE lua_tuoi_id = ?";
         $stmt = $this->conn->prepare($sql);
         if (!$stmt) {
             error_log("Prepare failed: " . $this->conn->error);
             return false;
         }
-        $stmt->bind_param("si", $mo_ta, $id);
+        $stmt->bind_param("ssi", $ten_lua_tuoi, $mo_ta, $id);
         $result = $stmt->execute();
         if (!$result) {
             error_log("Execute failed: " . $stmt->error);

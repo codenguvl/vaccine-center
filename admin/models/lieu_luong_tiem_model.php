@@ -32,15 +32,15 @@ class LieuLuongTiemModel
         return $result->fetch_assoc();
     }
 
-    public function addLieuLuongTiem($mo_ta)
+    public function addLieuLuongTiem($mo_ta, $gia_tri)
     {
-        $sql = "INSERT INTO lieu_luong_tiem (mo_ta) VALUES (?)";
+        $sql = "INSERT INTO lieu_luong_tiem (mo_ta, gia_tri) VALUES (?, ?)"; // Cập nhật câu lệnh SQL
         $stmt = $this->conn->prepare($sql);
         if (!$stmt) {
             error_log("Prepare failed: " . $this->conn->error);
             return false;
         }
-        $stmt->bind_param("s", $mo_ta);
+        $stmt->bind_param("sd", $mo_ta, $gia_tri);
         $result = $stmt->execute();
         if (!$result) {
             error_log("Execute failed: " . $stmt->error);
@@ -48,15 +48,15 @@ class LieuLuongTiemModel
         return $result;
     }
 
-    public function updateLieuLuongTiem($id, $mo_ta)
+    public function updateLieuLuongTiem($id, $mo_ta, $gia_tri)
     {
-        $sql = "UPDATE lieu_luong_tiem SET mo_ta = ? WHERE lieu_luong_id = ?";
+        $sql = "UPDATE lieu_luong_tiem SET mo_ta = ?, gia_tri = ? WHERE lieu_luong_id = ?"; // Cập nhật câu lệnh SQL
         $stmt = $this->conn->prepare($sql);
         if (!$stmt) {
             error_log("Prepare failed: " . $this->conn->error);
             return false;
         }
-        $stmt->bind_param("si", $mo_ta, $id);
+        $stmt->bind_param("sdi", $mo_ta, $gia_tri, $id);
         $result = $stmt->execute();
         if (!$result) {
             error_log("Execute failed: " . $stmt->error);

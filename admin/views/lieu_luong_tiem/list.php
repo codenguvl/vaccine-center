@@ -16,17 +16,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id'
 
 
 <?php if (isset($success_message)): ?>
-    <div class="uk-alert-success" uk-alert>
-        <a class="uk-alert-close" uk-close></a>
-        <p><?php echo $success_message; ?></p>
-    </div>
+<div class="uk-alert-success" uk-alert>
+    <a class="uk-alert-close" uk-close></a>
+    <p><?php echo $success_message; ?></p>
+</div>
 <?php endif; ?>
 
 <?php if (isset($error_message)): ?>
-    <div class="uk-alert-danger" uk-alert>
-        <a class="uk-alert-close" uk-close></a>
-        <p><?php echo $error_message; ?></p>
-    </div>
+<div class="uk-alert-danger" uk-alert>
+    <a class="uk-alert-close" uk-close></a>
+    <p><?php echo $error_message; ?></p>
+</div>
 <?php endif; ?>
 
 <a href="index.php?page=lieu-luong-tiem-add" class="uk-button uk-button-primary uk-margin-bottom">Thêm liều lượng tiêm
@@ -35,21 +35,23 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id'
 <table id="lieu-luong-tiem-table" class="uk-table uk-table-hover uk-table-striped">
     <thead>
         <tr>
+            <th>Giá trị</th>
             <th>Mô tả</th>
             <th>Hành động</th>
         </tr>
     </thead>
     <tbody>
         <?php foreach ($lieu_luong_tiem_list as $lieu_luong_tiem): ?>
-            <tr>
-                <td><?php echo htmlspecialchars($lieu_luong_tiem['mo_ta']); ?></td>
-                <td>
-                    <a href="index.php?page=lieu-luong-tiem-edit&id=<?php echo htmlspecialchars($lieu_luong_tiem['lieu_luong_id']); ?>"
-                        class="uk-button uk-button-primary uk-button-small">Sửa</a>
-                    <button class="uk-button uk-button-danger uk-button-small"
-                        onclick="openDeleteModal('<?php echo htmlspecialchars($lieu_luong_tiem['lieu_luong_id']); ?>')">Xóa</button>
-                </td>
-            </tr>
+        <tr>
+            <td><?php echo htmlspecialchars($lieu_luong_tiem['gia_tri']); ?></td>
+            <td><?php echo htmlspecialchars($lieu_luong_tiem['mo_ta']); ?></td>
+            <td>
+                <a href="index.php?page=lieu-luong-tiem-edit&id=<?php echo htmlspecialchars($lieu_luong_tiem['lieu_luong_id']); ?>"
+                    class="uk-button uk-button-primary uk-button-small">Sửa</a>
+                <button class="uk-button uk-button-danger uk-button-small"
+                    onclick="openDeleteModal('<?php echo htmlspecialchars($lieu_luong_tiem['lieu_luong_id']); ?>')">Xóa</button>
+            </td>
+        </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
@@ -70,19 +72,19 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id'
 </div>
 
 <script>
-    function openDeleteModal(id) {
-        document.getElementById('delete-id').value = id;
-        UIkit.modal('#delete-modal').show();
-    }
-    $(document).ready(function () {
-        $('#lieu-luong-tiem-table').DataTable({
-            "paging": true, // Cho phép phân trang
-            "searching": true, // Cho phép tìm kiếm
-            "ordering": true, // Cho phép sắp xếp
-            "info": true, // Hiển thị thông tin tổng số
-            "language": {
-                url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json' // Đổi ngôn ngữ sang tiếng Việt
-            },
-        });
+function openDeleteModal(id) {
+    document.getElementById('delete-id').value = id;
+    UIkit.modal('#delete-modal').show();
+}
+$(document).ready(function() {
+    $('#lieu-luong-tiem-table').DataTable({
+        "paging": true, // Cho phép phân trang
+        "searching": true, // Cho phép tìm kiếm
+        "ordering": true, // Cho phép sắp xếp
+        "info": true, // Hiển thị thông tin tổng số
+        "language": {
+            url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json' // Đổi ngôn ngữ sang tiếng Việt
+        },
     });
+});
 </script>
