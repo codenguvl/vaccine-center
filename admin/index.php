@@ -60,6 +60,7 @@ function getCustomPageTitle($page)
         'vaccine-list' => 'Danh sách vaccine',
         'vaccine-add' => 'Thêm vaccine',
         'vaccine-edit' => 'Sửa vaccine',
+        'vaccine-detail' => 'Chi tiết vaccine',
         // Lịch hẹn
         'lich-hen-list' => 'Danh sách lịch hẹn',
         'lich-hen-add' => 'Thêm lịch hẹn',
@@ -298,6 +299,9 @@ $page_title = getCustomPageTitle($current_page); // Lấy tiêu đề trang riê
                             break;
                         case 'vaccine-edit':
                             include 'views/vaccine/edit.php';
+                            break;
+                        case 'vaccine-detail':
+                            include 'views/vaccine/detail.php';
                             break;
                         case 'lich-hen-list':
                             include 'views/lich_hen/list.php';

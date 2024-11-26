@@ -19,7 +19,39 @@ class VaccineModel
         $result = $this->conn->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+    public function getFilteredVaccines($filters)
+    {
+        $sql = "SELECT v.*, b.ten_benh, dt.ten_doi_tuong, pd.ten_phac_do, dk.ten_dieu_kien 
+                FROM vaccine v 
+                LEFT JOIN benh b ON v.benh_id = b.benh_id 
+                LEFT JOIN doi_tuong_tiem_chung dt ON v.doi_tuong_id = dt.doi_tuong_id 
+                LEFT JOIN phat_do_tiem pd ON v.phac_do_id = pd.phac_do_id 
+                LEFT JOIN dieu_kien_tiem dk ON v.dieu_kien_id = dk.dieu_kien_id 
+                WHERE 1=1";
 
+        if (!empty($filters['benh_id'])) {
+            $sql .= " AND v.benh_id = " . intval($filters['benh_id']);
+        }
+        /* if (!empty($filters['danh_muc_id'])) {
+            $sql .= " AND v.danh_muc_id = " . intval($filters['danh_muc_id']);
+        } */
+        if (!empty($filters['doi_tuong_id'])) {
+            $sql .= " AND v.doi_tuong_id = " . intval($filters['doi_tuong_id']);
+        }
+        /* if (!empty($filters['lua_tuoi_id'])) {
+            $sql .= " AND v.lua_tuoi_id = " . intval($filters['lua_tuoi_id']);
+        } */
+        if (!empty($filters['dieu_kien_id'])) {
+            $sql .= " AND v.dieu_kien_id = " . intval($filters['dieu_kien_id']);
+        }
+
+        if (!empty($filters['lua_tuoi_id'])) {
+            $sql .= " AND pd.lua_tuoi_id = " . intval($filters['lua_tuoi_id']);
+        }
+
+        $result = $this->conn->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
     public function getVaccineById($id)
     {
         $sql = "SELECT * FROM vaccine WHERE vaccin_id = ?";

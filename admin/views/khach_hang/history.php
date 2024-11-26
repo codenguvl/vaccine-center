@@ -19,6 +19,8 @@ if (!$khachhang) {
     echo "Không tìm thấy thông tin khách hàng.";
     exit;
 }
+
+
 ?>
 
 <div class="uk-container">
@@ -62,24 +64,24 @@ if (!$khachhang) {
                 $lich_tiem_list = $lich_tiem_controller->getAllLichTiemByKhachHangId($khachhang_id); // Sử dụng phương thức mới
                 foreach ($lich_tiem_list as $lich_tiem):
                     ?>
-                <tr>
-                    <td><?php echo isset($lich_tiem['ngay_tiem']) ? htmlspecialchars($lich_tiem['ngay_tiem']) : ''; ?>
-                    </td>
-                    <td><?php echo isset($lich_tiem['ten_vaccine']) ? htmlspecialchars($lich_tiem['ten_vaccine']) : ''; ?>
-                    </td>
-                    <td><?php echo isset($lich_tiem['lan_tiem']) ? htmlspecialchars($lich_tiem['lan_tiem']) : ''; ?>
-                    </td>
-                    <td>
-                        <span
-                            class="uk-badge uk-badge-<?php echo isset($lich_tiem['trang_thai']) && $lich_tiem['trang_thai'] == 'da_tiem' ? 'success' : 'warning'; ?>">
-                            <?php echo isset($lich_tiem['trang_thai']) && $lich_tiem['trang_thai'] == 'da_tiem' ? 'Đã tiêm' : 'Chờ tiêm'; ?>
-                        </span>
-                    </td>
-                    <td><?php echo isset($lich_tiem['ten_benh']) ? htmlspecialchars($lich_tiem['ten_benh']) : ''; ?>
-                    </td>
-                    <!-- Hiển thị tên bệnh -->
-                </tr>
-                <?php
+                    <tr>
+                        <td><?php echo isset($lich_tiem['ngay_tiem']) ? htmlspecialchars($lich_tiem['ngay_tiem']) : ''; ?>
+                        </td>
+                        <td><?php echo isset($lich_tiem['ten_vaccine']) ? htmlspecialchars($lich_tiem['ten_vaccine']) : ''; ?>
+                        </td>
+                        <td><?php echo isset($lich_tiem['lan_tiem']) ? htmlspecialchars($lich_tiem['lan_tiem']) : ''; ?>
+                        </td>
+                        <td>
+                            <span
+                                class="uk-badge uk-badge-<?php echo isset($lich_tiem['trang_thai']) && $lich_tiem['trang_thai'] == 'da_tiem' ? 'success' : 'warning'; ?>">
+                                <?php echo isset($lich_tiem['trang_thai']) && $lich_tiem['trang_thai'] == 'da_tiem' ? 'Đã tiêm' : 'Chờ tiêm'; ?>
+                            </span>
+                        </td>
+                        <td><?php echo isset($lich_tiem['ten_benh']) ? htmlspecialchars($lich_tiem['ten_benh']) : ''; ?>
+                        </td>
+                        <!-- Hiển thị tên bệnh -->
+                    </tr>
+                    <?php
                 endforeach;
                 ?>
             </tbody>
@@ -105,12 +107,12 @@ if (!$khachhang) {
                 foreach ($lich_hen_list as $lich_hen):
                     if ($lich_hen['khachhang_id'] == $khachhang_id):
                         ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($lich_hen['ngay_hen']); ?></td>
-                    <td><?php echo htmlspecialchars($lich_hen['gio_bat_dau']); ?></td>
-                    <td>
-                        <span class="uk-badge">
-                            <?php
+                        <tr>
+                            <td><?php echo htmlspecialchars($lich_hen['ngay_hen']); ?></td>
+                            <td><?php echo htmlspecialchars($lich_hen['gio_bat_dau']); ?></td>
+                            <td>
+                                <span class="uk-badge">
+                                    <?php
                                     // Hiển thị trạng thái lịch hẹn bằng tiếng Việt
                                     switch (htmlspecialchars($lich_hen['trang_thai'])) {
                                         case 'cho_xac_nhan':
@@ -129,11 +131,11 @@ if (!$khachhang) {
                                             echo 'Không xác định';
                                     }
                                     ?>
-                        </span>
-                    </td>
+                                </span>
+                            </td>
 
-                </tr>
-                <?php
+                        </tr>
+                        <?php
                     endif;
                 endforeach;
                 ?>
@@ -161,24 +163,24 @@ if (!$khachhang) {
                         $thanh_toan = $thanh_toan_controller->getThanhToanByLichHen($lich_hen['lich_hen_id']);
                         if ($thanh_toan):
                             ?>
-                <tr>
-                    <td><?php echo isset($thanh_toan['ngay_thanh_toan']) ? htmlspecialchars($thanh_toan['ngay_thanh_toan']) : ''; ?>
-                    </td>
-                    <td><?php echo isset($thanh_toan['so_tien_con_lai']) ? number_format($thanh_toan['so_tien_con_lai'], 0, ',', '.') . ' VNĐ' : ''; ?>
-                    </td>
-                    <td>
-                        <span class="uk-badge">
-                            <?php
+                            <tr>
+                                <td><?php echo isset($thanh_toan['ngay_thanh_toan']) ? htmlspecialchars($thanh_toan['ngay_thanh_toan']) : ''; ?>
+                                </td>
+                                <td><?php echo isset($thanh_toan['so_tien_con_lai']) ? number_format($thanh_toan['so_tien_con_lai'], 0, ',', '.') . ' VNĐ' : ''; ?>
+                                </td>
+                                <td>
+                                    <span class="uk-badge">
+                                        <?php
                                         // Hiển thị trạng thái thanh toán bằng tiếng Việt
                                         echo isset($thanh_toan['trang_thai']) ?
                                             (htmlspecialchars($thanh_toan['trang_thai']) == 'da_thanh_toan' ? 'Đã thanh toán' : 'Chưa thanh toán') : '';
                                         ?>
-                        </span>
-                    </td>
-                    <td><?php echo isset($thanh_toan['ghi_chu']) ? htmlspecialchars($thanh_toan['ghi_chu']) : ''; ?>
-                    </td>
-                </tr>
-                <?php
+                                    </span>
+                                </td>
+                                <td><?php echo isset($thanh_toan['ghi_chu']) ? htmlspecialchars($thanh_toan['ghi_chu']) : ''; ?>
+                                </td>
+                            </tr>
+                            <?php
                         endif;
                     endif;
                 endforeach;
@@ -208,17 +210,17 @@ if (!$khachhang) {
                         $dat_coc = $dat_coc_controller->getDatCocById($lich_hen['dat_coc_id']);
                         if ($dat_coc):
                             ?>
-                <tr>
-                    <td><?php echo isset($dat_coc['ngay_dat_coc']) ? htmlspecialchars($dat_coc['ngay_dat_coc']) : ''; ?>
-                    </td>
-                    <td><?php echo isset($dat_coc['ten_vaccine']) ? htmlspecialchars($dat_coc['ten_vaccine']) : ''; ?>
-                    </td>
-                    <td><?php echo isset($dat_coc['so_tien_dat_coc']) ? number_format($dat_coc['so_tien_dat_coc'], 0, ',', '.') . ' VNĐ' : ''; ?>
-                    </td>
+                            <tr>
+                                <td><?php echo isset($dat_coc['ngay_dat_coc']) ? htmlspecialchars($dat_coc['ngay_dat_coc']) : ''; ?>
+                                </td>
+                                <td><?php echo isset($dat_coc['ten_vaccine']) ? htmlspecialchars($dat_coc['ten_vaccine']) : ''; ?>
+                                </td>
+                                <td><?php echo isset($dat_coc['so_tien_dat_coc']) ? number_format($dat_coc['so_tien_dat_coc'], 0, ',', '.') . ' VNĐ' : ''; ?>
+                                </td>
 
 
-                </tr>
-                <?php
+                            </tr>
+                            <?php
                         endif;
                     endif;
                 endforeach;
@@ -231,25 +233,25 @@ if (!$khachhang) {
 </div>
 
 <style>
-.uk-badge {
-    padding: 5px 10px;
-    border-radius: 3px;
-}
+    .uk-badge {
+        padding: 5px 10px;
+        border-radius: 3px;
+    }
 
-.uk-badge-success {
-    background-color: #32d296;
-}
+    .uk-badge-success {
+        background-color: #32d296;
+    }
 
-.uk-badge-warning {
-    background-color: #faa05a;
-}
+    .uk-badge-warning {
+        background-color: #faa05a;
+    }
 </style>
 
 <script>
-$(document).ready(function() {
-    $('#lich_tiem_table').DataTable();
-    $('#lich_hen_table').DataTable();
-    $('#lich_thanh_toan_table').DataTable();
-    $('#lich_dat_coc_table').DataTable();
-});
+    $(document).ready(function () {
+        $('#lich_tiem_table').DataTable();
+        $('#lich_hen_table').DataTable();
+        $('#lich_thanh_toan_table').DataTable();
+        $('#lich_dat_coc_table').DataTable();
+    });
 </script>

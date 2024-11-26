@@ -1,14 +1,29 @@
 <?php
 require_once __DIR__ . '/../config/mysql_connection.php';
 require_once __DIR__ . '/../models/vaccine_model.php';
+require_once __DIR__ . '/../models/benh_model.php';
+require_once __DIR__ . '/../models/danh_muc_benh_model.php';
+require_once __DIR__ . '/../models/doi_tuong_tiem_chung_model.php';
+require_once __DIR__ . '/../models/dieu_kien_tiem_model.php';
+require_once __DIR__ . '/../models/lua_tuoi_model.php';
 
 class VaccineController
 {
     private $vaccine_model;
+    private $benh_model;
+    private $danh_muc_model;
+    private $doi_tuong_model;
+    private $dieu_kien_model;
+    private $lua_tuoi_model;
 
     public function __construct($conn)
     {
         $this->vaccine_model = new VaccineModel($conn);
+        $this->benh_model = new BenhModel($conn);
+        $this->danh_muc_model = new DanhMucBenhModel($conn);
+        $this->doi_tuong_model = new DoiTuongTiemChungModel($conn);
+        $this->dieu_kien_model = new DieuKienTiemModel($conn);
+        $this->lua_tuoi_model = new LuaTuoiModel($conn);
     }
 
     public function getAllVaccine()
@@ -16,6 +31,10 @@ class VaccineController
         return $this->vaccine_model->getAllVaccine();
     }
 
+    public function getFilteredVaccines($filters)
+    {
+        return $this->vaccine_model->getFilteredVaccines($filters);
+    }
     public function getVaccineById($id)
     {
         return $this->vaccine_model->getVaccineById($id);

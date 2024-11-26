@@ -50,6 +50,7 @@ function getBreadcrumbTitle($page)
         'vaccine-list' => 'Danh sách vaccine',
         'vaccine-add' => 'Thêm vaccine',
         'vaccine-edit' => 'Sửa vaccine',
+        'vaccine-detail' => 'Chi tiết vaccine',
         // Lịch hẹn
         'lich-hen-list' => 'Danh sách lịch hẹn',
         'lich-hen-add' => 'Thêm lịch hẹn',
@@ -115,6 +116,7 @@ function getParentPage($page)
         // Vaccine
         'vaccine-add' => 'vaccine-list',
         'vaccine-edit' => 'vaccine-list',
+        'vaccine-detail' => 'vaccine-list',
         // Lịch hẹn
         'lich-hen-add' => 'lich-hen-list',
         'lich-hen-edit' => 'lich-hen-list',
@@ -180,15 +182,15 @@ if ($current_page != 'home') {
     <div class="uk-container">
         <ul class="uk-breadcrumb">
             <?php foreach ($breadcrumb as $item): ?>
-            <li <?php echo $item['active'] ? 'class="uk-active"' : ''; ?>>
-                <?php if ($item['active']): ?>
-                <span><?php echo htmlspecialchars($item['title']); ?></span>
-                <?php else: ?>
-                <a href="<?php echo htmlspecialchars($item['link']); ?>">
-                    <?php echo htmlspecialchars($item['title']); ?>
-                </a>
-                <?php endif; ?>
-            </li>
+                <li <?php echo $item['active'] ? 'class="uk-active"' : ''; ?>>
+                    <?php if ($item['active']): ?>
+                        <span><?php echo htmlspecialchars($item['title']); ?></span>
+                    <?php else: ?>
+                        <a href="<?php echo htmlspecialchars($item['link']); ?>">
+                            <?php echo htmlspecialchars($item['title']); ?>
+                        </a>
+                    <?php endif; ?>
+                </li>
             <?php endforeach; ?>
         </ul>
     </div>

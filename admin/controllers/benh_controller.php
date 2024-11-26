@@ -35,4 +35,9 @@ class BenhController
     {
         return $this->benh_model->deleteBenh($id);
     }
+
+    public function getBenhByDanhMucId($danh_muc_id)
+    {
+        return $this->benh_model->getBenhByDanhMucId($danh_muc_id);
+    }
 }

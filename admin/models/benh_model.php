@@ -81,4 +81,18 @@ class BenhModel
         }
         return $result;
     }
+
+    public function getBenhByDanhMucId($danh_muc_id)
+    {
+        $sql = "SELECT * FROM benh WHERE danh_muc_id = ?";
+        $stmt = $this->conn->prepare($sql);
+        if (!$stmt) {
+            error_log("Prepare failed: " . $this->conn->error);
+            return false;
+        }
+        $stmt->bind_param("i", $danh_muc_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }
