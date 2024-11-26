@@ -154,7 +154,7 @@ class ThanhToanModel
         }
     }
 
-    public function addThanhToanAndLichTiem($khachhang_id, $vaccine_id, $so_tien_con_lai, $ngay_hen = null, $gio_hen = null, $ghi_chu = '', $tiem_ngay = true)
+    public function addThanhToanAndLichTiem($khachhang_id, $vaccine_id, $so_tien_con_lai, $ngay_hen = null, $gio_bat_dau = null, $gio_ket_thuc = null, $ghi_chu = '', $tiem_ngay = true)
     {
         $this->conn->begin_transaction();
         try {
@@ -171,12 +171,13 @@ class ThanhToanModel
             // 2. Tạo lịch hẹn
             $trang_thai = $tiem_ngay ? 'hoan_thanh' : 'cho_xac_nhan';
             $ngay = $tiem_ngay ? date('Y-m-d') : $ngay_hen;
-            $gio = $tiem_ngay ? date('H:i:s') : $gio_hen;
+            $gioBatDau = $tiem_ngay ? date('H:i:s') : $gio_bat_dau;
+            $gioKetThuc = $tiem_ngay ? date('H:i:s', strtotime('+1 hour')) : $gio_ket_thuc; // Assuming 1 hour duration
 
-            $sql = "INSERT INTO lich_hen (khachhang_id, ngay_hen, gio_hen, trang_thai, ghi_chu, dat_coc_id) 
-                VALUES (?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO lich_hen (khachhang_id, ngay_hen, gio_bat_dau, gio_ket_thuc, trang_thai, ghi_chu, dat_coc_id) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?)";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("issssi", $khachhang_id, $ngay, $gio, $trang_thai, $ghi_chu, $dat_coc_id);
+            $stmt->bind_param("isssssi", $khachhang_id, $ngay, $gioBatDau, $gioKetThuc, $trang_thai, $ghi_chu, $dat_coc_id);
             if (!$stmt->execute()) {
                 throw new Exception("Không thể tạo lịch hẹn: " . $stmt->error);
             }

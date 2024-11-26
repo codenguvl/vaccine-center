@@ -236,4 +236,12 @@ class LichHenModel
         }
     }
 
+    public function updateLichHenStatusToComplete($id)
+    {
+        $sql = "UPDATE lich_hen SET trang_thai = 'hoan_thanh' WHERE lich_hen_id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
+    }
+
 }

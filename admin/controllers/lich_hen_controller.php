@@ -97,4 +97,9 @@ class LichHenController
     {
         return $this->lich_hen_model->updateLichHenStatus($id, $trang_thai);
     }
+
+    public function updateLichHenStatusToComplete($id)
+    {
+        return $this->lich_hen_model->updateLichHenStatusToComplete($id);
+    }
 }

@@ -59,7 +59,7 @@ class ThanhToanController
         );
     }
 
-    public function addThanhToanAndLichTiem($khachhang_id, $vaccine_id, $so_tien, $ngay_hen = null, $gio_hen = null, $ghi_chu = '', $tiem_ngay = true)
+    public function addThanhToanAndLichTiem($khachhang_id, $vaccine_id, $so_tien, $ngay_hen = null, $gio_bat_dau = null, $gio_ket_thuc = null, $ghi_chu = '', $tiem_ngay = true)
     {
         try {
             // Validate dữ liệu đầu vào
@@ -67,7 +67,7 @@ class ThanhToanController
                 throw new Exception("Thiếu thông tin bắt buộc");
             }
 
-            if (!$tiem_ngay && (empty($ngay_hen) || empty($gio_hen))) {
+            if (!$tiem_ngay && (empty($ngay_hen) || empty($gio_bat_dau) || empty($gio_ket_thuc))) {
                 throw new Exception("Cần nhập ngày giờ hẹn khi không tiêm ngay");
             }
 
@@ -76,7 +76,8 @@ class ThanhToanController
                 $vaccine_id,
                 $so_tien,
                 $ngay_hen,
-                $gio_hen,
+                $gio_bat_dau,
+                $gio_ket_thuc,
                 $ghi_chu,
                 $tiem_ngay
             );
