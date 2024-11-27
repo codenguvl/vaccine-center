@@ -3,6 +3,29 @@
     width: 100%;
     object-fit: cover;
 }
+
+.dashboard-title {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.stat-card {
+    background-color: #ffffff;
+    padding: 30px;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.stat-card:hover {
+    transform: scale(1.05);
+}
+
+.uk-text-lead {
+    font-size: 40px;
+}
 </style>
 
 <?php
@@ -48,30 +71,38 @@ foreach ($all_vaccinations as $vaccination) {
 
 
 $reaction_stats = $phan_ung_controller->getThongKePhanUng();
+
+// Thêm thông tin thống kê vào biến
+$dashboard_info = [
+    'Tổng số vắc xin' => $total_vaccines,
+    'Tổng số khách hàng' => $total_customers,
+    'Tổng số lịch hẹn' => count($all_appointments),
+    'Tổng số tiêm chủng' => count($all_vaccinations)
+];
 ?>
 
 <div class="uk-container uk-container-large">
-    <div class="uk-grid-small uk-child-width-1-2@m uk-margin-medium-top" uk-grid>
-        <!-- Ảnh chiếm 50% -->
+    <div class="uk-grid-small uk-child-width-1-4@m" uk-grid>
+        <?php foreach ($dashboard_info as $title => $value): ?>
         <div>
-            <img src="images/background.png" alt="Data flow" class="background" style="width: 100%; height: auto;">
+            <div class="uk-card stat-card">
+                <h3 class="uk-card-title uk-text-bold"><?php echo $title; ?></h3>
+                <p class="uk-text-large uk-text-primary uk-text-bold uk-text-lead"><?php echo $value; ?></p>
+            </div>
         </div>
-
-        <!-- 2 biểu đồ chiếm 50%, một cái trên và một cái dưới -->
+        <?php endforeach; ?>
+    </div>
+    <div class="uk-grid-small uk-child-width-1-2@m uk-margin-medium-top" uk-grid>
         <div>
-            <div class="uk-grid-small uk-child-width-1-1" uk-grid>
-                <div>
-                    <div class="uk-card uk-card-default uk-card-body uk-card-hover">
-                        <h3 class="uk-card-title">Thống kê lịch hẹn</h3>
-                        <canvas id="appointmentChart" style="max-width: 250px; margin: 0 auto;"></canvas>
-                    </div>
-                </div>
-                <div>
-                    <div class="uk-card uk-card-default uk-card-body uk-card-hover">
-                        <h3 class="uk-card-title">Thống kê tiêm chủng</h3>
-                        <canvas id="vaccinationChart" style="max-width: 250px; margin: 0 auto;"></canvas>
-                    </div>
-                </div>
+            <div class="uk-card uk-card-default uk-card-body uk-card-hover">
+                <h3 class="uk-card-title uk-text-bold">Thống kê lịch hẹn</h3>
+                <canvas id="appointmentChart" style="max-width: 100%; margin: 0 auto;"></canvas>
+            </div>
+        </div>
+        <div>
+            <div class="uk-card uk-card-default uk-card-body uk-card-hover">
+                <h3 class="uk-card-title uk-text-bold">Thống kê tiêm chủng</h3>
+                <canvas id="vaccinationChart" style="max-width: 100%; margin: 0 auto;"></canvas>
             </div>
         </div>
     </div>

@@ -227,6 +227,38 @@ class LichHenModel
             $stmt->bind_param("si", $trang_thai, $id);
             $stmt->execute();
 
+            // Xử lý tạo lịch tiêm khi trạng thái là 'da_xac_nhan'
+            if ($trang_thai == 'da_xac_nhan') {
+                $sql = "SELECT khachhang_id, dat_coc_id, ngay_hen FROM lich_hen WHERE lich_hen_id = ?";
+                $stmt = $this->conn->prepare($sql);
+                $stmt->bind_param("i", $id);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $lich_hen = $result->fetch_assoc();
+
+                if ($lich_hen) {
+                    $khachhang_id = $lich_hen['khachhang_id'];
+                    $dat_coc_id = $lich_hen['dat_coc_id'];
+
+                    if ($dat_coc_id) {
+                        $sql = "SELECT vaccine_id FROM dat_coc WHERE dat_coc_id = ?";
+                        $stmt = $this->conn->prepare($sql);
+                        $stmt->bind_param("i", $dat_coc_id);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+                        $dat_coc = $result->fetch_assoc();
+
+                        if ($dat_coc) {
+                            $sql = "INSERT INTO lich_tiem (khachhang_id, vaccin_id, ngay_tiem, lan_tiem, trang_thai, ghi_chu) 
+                            VALUES (?, ?, ?, 1, 'cho_tiem', 'Tạo tự động từ lịch hẹn')";
+                            $stmt = $this->conn->prepare($sql);
+                            $stmt->bind_param("iis", $khachhang_id, $dat_coc['vaccine_id'], $lich_hen['ngay_hen']);
+                            $stmt->execute();
+                        }
+                    }
+                }
+            }
+
             $this->conn->commit();
             return true;
         } catch (Exception $e) {
