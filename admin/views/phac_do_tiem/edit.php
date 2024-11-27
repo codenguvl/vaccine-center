@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php foreach ($lua_tuoi_list as $lua_tuoi): ?>
                 <option value="<?php echo htmlspecialchars($lua_tuoi['lua_tuoi_id']); ?>"
                     <?php echo (isset($phac_do['lua_tuoi_id']) && $lua_tuoi['lua_tuoi_id'] == $phac_do['lua_tuoi_id']) ? 'selected' : ''; ?>>
-                    <?php echo htmlspecialchars($lua_tuoi['mo_ta']); ?>
+                    <?php echo htmlspecialchars($lua_tuoi['ten_lua_tuoi']); ?>
                 </option>
                 <?php endforeach; ?>
             </select>

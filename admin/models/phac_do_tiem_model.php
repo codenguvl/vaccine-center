@@ -10,7 +10,7 @@ class PhacDoTiemModel
 
     public function getAllPhacDoTiem()
     {
-        $sql = "SELECT pdt.*, lt.mo_ta as lua_tuoi_mo_ta, llt.mo_ta as lieu_luong_mo_ta 
+        $sql = "SELECT pdt.*, lt.ten_lua_tuoi as ten_lua_tuoi, llt.mo_ta as lieu_luong_mo_ta 
                 FROM phat_do_tiem pdt
                 LEFT JOIN lua_tuoi lt ON pdt.lua_tuoi_id = lt.lua_tuoi_id
                 LEFT JOIN lieu_luong_tiem llt ON pdt.lieu_luong_id = llt.lieu_luong_id";

@@ -16,17 +16,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id'
 
 
 <?php if (isset($success_message)): ?>
-<div class="uk-alert-success" uk-alert>
-    <a class="uk-alert-close" uk-close></a>
-    <p><?php echo $success_message; ?></p>
-</div>
+    <div class="uk-alert-success" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p><?php echo $success_message; ?></p>
+    </div>
 <?php endif; ?>
 
 <?php if (isset($error_message)): ?>
-<div class="uk-alert-danger" uk-alert>
-    <a class="uk-alert-close" uk-close></a>
-    <p><?php echo $error_message; ?></p>
-</div>
+    <div class="uk-alert-danger" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p><?php echo $error_message; ?></p>
+    </div>
 <?php endif; ?>
 
 <a href="index.php?page=phac-do-tiem-add" class="uk-button uk-button-primary uk-margin-bottom">Thêm Phác đồ tiêm mới</a>
@@ -42,21 +42,21 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id'
     </thead>
     <tbody>
         <?php foreach ($phac_do_list as $phac_do): ?>
-        <tr>
-            <td><?php echo isset($phac_do['ten_phac_do']) ? htmlspecialchars($phac_do['ten_phac_do']) : ''; ?></td>
-            <td><?php echo isset($phac_do['lua_tuoi_mo_ta']) ? htmlspecialchars($phac_do['lua_tuoi_mo_ta']) : ''; ?>
-            </td>
-            <td><?php echo isset($phac_do['lieu_luong_mo_ta']) ? htmlspecialchars($phac_do['lieu_luong_mo_ta']) : ''; ?>
-            </td>
-            <td>
-                <a href="index.php?page=phac-do-tiem-detail&id=<?php echo isset($phac_do['phac_do_id']) ? htmlspecialchars($phac_do['phac_do_id']) : ''; ?>"
-                    class="uk-button uk-button-primary uk-button-small">Chi tiết</a>
-                <a href="index.php?page=phac-do-tiem-edit&id=<?php echo isset($phac_do['phac_do_id']) ? htmlspecialchars($phac_do['phac_do_id']) : ''; ?>"
-                    class="uk-button uk-button-primary uk-button-small">Sửa</a>
-                <button class="uk-button uk-button-danger uk-button-small"
-                    onclick="openDeleteModal('<?php echo isset($phac_do['phac_do_id']) ? htmlspecialchars($phac_do['phac_do_id']) : ''; ?>')">Xóa</button>
-            </td>
-        </tr>
+            <tr>
+                <td><?php echo isset($phac_do['ten_phac_do']) ? htmlspecialchars($phac_do['ten_phac_do']) : ''; ?></td>
+                <td><?php echo isset($phac_do['lua_tuoi_mo_ta']) ? htmlspecialchars($phac_do['lua_tuoi_mo_ta']) : ''; ?>
+                </td>
+                <td><?php echo isset($phac_do['ten_lua_tuoi']) ? htmlspecialchars($phac_do['ten_lua_tuoi']) : ''; ?>
+                </td>
+                <td>
+                    <a href="index.php?page=phac-do-tiem-detail&id=<?php echo isset($phac_do['phac_do_id']) ? htmlspecialchars($phac_do['phac_do_id']) : ''; ?>"
+                        class="uk-button uk-button-primary uk-button-small">Chi tiết</a>
+                    <a href="index.php?page=phac-do-tiem-edit&id=<?php echo isset($phac_do['phac_do_id']) ? htmlspecialchars($phac_do['phac_do_id']) : ''; ?>"
+                        class="uk-button uk-button-primary uk-button-small">Sửa</a>
+                    <button class="uk-button uk-button-danger uk-button-small"
+                        onclick="openDeleteModal('<?php echo isset($phac_do['phac_do_id']) ? htmlspecialchars($phac_do['phac_do_id']) : ''; ?>')">Xóa</button>
+                </td>
+            </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
@@ -78,20 +78,20 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id'
 </div>
 
 <script>
-function openDeleteModal(id) {
-    document.getElementById('delete-id').value = id;
-    UIkit.modal('#delete-modal').show();
-}
-$(document).ready(function() {
-    $('#phac-do-table').DataTable({
-        "language": {
-            url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json' // Đổi ngôn ngữ sang tiếng Việt
-        },
-        "ordering": true, // cho phép sắp xếp cột
-        "searching": true, // hiển thị hộp tìm kiếm
-        "paging": true, // cho phép phân trang
-        "lengthChange": true, // cho phép điều chỉnh số lượng hàng trên mỗi trang
-        "pageLength": 10 // số lượng hàng hiển thị mỗi trang
+    function openDeleteModal(id) {
+        document.getElementById('delete-id').value = id;
+        UIkit.modal('#delete-modal').show();
+    }
+    $(document).ready(function () {
+        $('#phac-do-table').DataTable({
+            "language": {
+                url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json' // Đổi ngôn ngữ sang tiếng Việt
+            },
+            "ordering": true, // cho phép sắp xếp cột
+            "searching": true, // hiển thị hộp tìm kiếm
+            "paging": true, // cho phép phân trang
+            "lengthChange": true, // cho phép điều chỉnh số lượng hàng trên mỗi trang
+            "pageLength": 10 // số lượng hàng hiển thị mỗi trang
+        });
     });
-});
 </script>
