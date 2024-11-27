@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 24, 2024 at 01:07 PM
+-- Generation Time: Nov 27, 2024 at 04:37 AM
 -- Server version: 5.7.17-log
 -- PHP Version: 5.6.30
 
@@ -37,7 +37,8 @@ CREATE TABLE `benh` (
 --
 
 INSERT INTO `benh` (`benh_id`, `ten_benh`, `danh_muc_id`) VALUES
-(1, 'Khùng', 2);
+(1, 'Khùng', 2),
+(2, 'Điên', 2);
 
 -- --------------------------------------------------------
 
@@ -106,7 +107,9 @@ INSERT INTO `chuc_nang` (`id`, `ten_chuc_nang`, `mo_ta`, `duong_dan`) VALUES
 (53, 'Thông tin cá nhân', '', 'profile'),
 (54, 'Xem đăng ký', '', 'dang-ky-tiem-tai-nha-list'),
 (55, 'Chi tiết đăng ký', '', 'dang-ky-tiem-tai-nha-detail'),
-(56, 'Kiểm tra thông tin khách hàng', '', 'check_info');
+(56, 'Kiểm tra thông tin khách hàng', '', 'check_info'),
+(57, 'Chi tiết vaccine', '', 'vaccine-detail'),
+(58, 'Chi tiết phác đồ', '', 'phac-do-tiem-detail');
 
 -- --------------------------------------------------------
 
@@ -124,7 +127,7 @@ CREATE TABLE `dang_ky_tiem_tai_nha` (
   `phuong_xa` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `dia_chi` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `ho_ten_lien_he` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `quan_he` enum('vo','chong','con','bo','me','ong','ba','khac') COLLATE utf8_unicode_ci NOT NULL,
+  `quan_he` enum('vo','chong','con','bo','me','ong','ba','khac','ban_than') COLLATE utf8_unicode_ci NOT NULL,
   `dien_thoai_lien_he` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `ngay_mong_muon` date NOT NULL,
   `trang_thai` enum('cho_xu_ly','da_xu_ly','huy') COLLATE utf8_unicode_ci DEFAULT 'cho_xu_ly',
@@ -138,7 +141,8 @@ CREATE TABLE `dang_ky_tiem_tai_nha` (
 INSERT INTO `dang_ky_tiem_tai_nha` (`dang_ky_id`, `ho_ten`, `ngay_sinh`, `gioi_tinh`, `tinh_thanh`, `quan_huyen`, `phuong_xa`, `dia_chi`, `ho_ten_lien_he`, `quan_he`, `dien_thoai_lien_he`, `ngay_mong_muon`, `trang_thai`, `ngay_tao`) VALUES
 (1, 'Ngô Thanh Tân', '2024-10-28', '', '89', '886', '30361', '0900000000', 'Ngân Thanh Tô', '', '0586081594', '2024-11-29', 'cho_xu_ly', '2024-11-23 02:11:08'),
 (2, 'Ngô Thanh Tân', '2024-10-28', '', '89', '886', '30361', '0900000000', 'Ngân Thanh Tô', '', '0586081594', '2024-11-29', 'huy', '2024-11-23 02:15:50'),
-(3, 'Ngô Thanh Tân', '2024-11-21', 'nam', '75', '736', '26245', 'Khặc khặc', 'Ngân Thanh Tô', 'vo', '0586081594', '2024-11-13', 'cho_xu_ly', '2024-11-23 06:40:08');
+(3, 'Ngô Thanh Tân', '2024-11-21', 'nam', '75', '736', '26245', 'Khặc khặc', 'Ngân Thanh Tô', 'vo', '0586081594', '2024-11-13', 'cho_xu_ly', '2024-11-23 06:40:08'),
+(4, 'codenguvl', '2024-11-23', 'nu', '96', '971', '32191', 'w', 'Ngân Thanh Tô', 'ban_than', '2222', '2024-11-30', 'cho_xu_ly', '2024-11-27 03:40:51');
 
 -- --------------------------------------------------------
 
@@ -201,7 +205,15 @@ INSERT INTO `dat_coc` (`dat_coc_id`, `vaccine_id`, `phan_tram_dat_coc`, `so_tien
 (20, 1, 20, '2222.20', '2024-11-16', 'dat_coc', ''),
 (21, 1, 20, '2222.20', '2024-11-16', 'dat_coc', '3h'),
 (22, 1, 20, '2222.20', '2024-11-21', 'dat_coc', 'Khệc khẹc'),
-(23, 1, 20, '2222.20', '2024-11-24', 'dat_coc', '<p>C&uacute;c cu</p>\r\n');
+(23, 1, 20, '2222.20', '2024-11-24', 'dat_coc', '<p>C&uacute;c cu</p>\r\n'),
+(47, 1, 0, '0.00', '2024-11-26', 'dat_coc', NULL),
+(48, 1, 0, '0.00', '2024-11-26', 'dat_coc', NULL),
+(49, 2, 0, '0.00', '2024-11-26', 'dat_coc', NULL),
+(50, 2, 20, '444.40', '2024-11-26', 'dat_coc', '<p>Ch&iacute;ch vắc lỏ</p>\r\n'),
+(51, 2, 20, '444.40', '2024-11-26', 'dat_coc', '<p>22</p>\r\n'),
+(52, 2, 20, '444.40', '2024-11-26', 'dat_coc', '<p><em>Xin ch&agrave;o T&acirc;n l&agrave; t&ocirc;i</em></p>\r\n'),
+(53, 2, 0, '0.00', '2024-11-26', 'dat_coc', NULL),
+(54, 2, 0, '0.00', '2024-11-27', 'dat_coc', NULL);
 
 -- --------------------------------------------------------
 
@@ -272,7 +284,8 @@ INSERT INTO `khachhang` (`khachhang_id`, `fullname`, `cccd`, `ngaysinh`, `gioiti
 (9, 'Tăng Truyền Tín', '344543531345', '2024-10-23', 'nam', '0394051627', '22', '89', '886', '30341', NULL),
 (11, 'Ngô Thanh Tân', '344543565433645345', '2024-11-22', 'nam', '0999999999', '22', '67', '664', '24703', 'nttantts@gmail.com'),
 (12, 'Ngân Thanh Tô', '34454351233211', '2024-11-06', 'nu', '09933543', '22', '67', '662', '24640', 'nganthanhto@gmail.com'),
-(14, 'Ngô Thanh Tân 2', '3445435111', '2024-11-30', 'nam', '0999991999', '22', '66', '647', '24247', 'nguyenphuocthanh1904@gmail.com');
+(14, 'Ngô Thanh Tân 2', '3445435111', '2024-11-30', 'nam', '0999991999', '22', '66', '647', '24247', 'nguyenphuocthanh1904@gmail.com'),
+(15, 'Ngô Thanh Tân', '123', '2024-11-28', 'nam', '0999999965', '22', '77', '750', '26611', 'tripvang123@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -311,8 +324,14 @@ INSERT INTO `lich_hen` (`lich_hen_id`, `khachhang_id`, `ngay_hen`, `trang_thai`,
 (36, 11, '2024-11-20', 'da_xac_nhan', '<p>kehch</p>', '2024-11-24 01:53:38', NULL, '10:54:00', '11:24:00'),
 (37, 2, '2024-11-03', 'cho_xac_nhan', '<p>C&uacute;c cu</p>\r\n', '2024-11-24 03:51:22', 23, '00:51:00', '01:21:00'),
 (38, 8, '2024-11-08', 'cho_xac_nhan', '', '2024-11-24 03:52:27', NULL, '02:54:00', '03:24:00'),
-(39, 8, '2024-11-12', 'cho_xac_nhan', '', '2024-11-24 03:54:37', NULL, '10:59:00', '11:29:00'),
-(40, 11, '2024-11-07', 'da_huy', '', '2024-11-24 04:06:06', NULL, '02:08:00', '02:38:00');
+(39, 8, '2024-11-12', 'da_xac_nhan', '', '2024-11-24 03:54:37', NULL, '10:59:00', '11:29:00'),
+(40, 11, '2024-11-07', 'da_xac_nhan', '', '2024-11-24 04:06:06', NULL, '02:08:00', '02:38:00'),
+(41, 2, '2024-11-26', 'hoan_thanh', '', '2024-11-26 12:38:14', 47, '13:38:14', '14:38:14'),
+(42, 8, '2024-11-26', 'hoan_thanh', '', '2024-11-26 12:38:32', 48, '13:38:32', '14:38:32'),
+(43, 12, '2024-11-26', 'hoan_thanh', '', '2024-11-26 12:39:31', 49, '13:39:31', '14:39:31'),
+(46, 12, '2024-11-27', 'hoan_thanh', '<p><em>Xin ch&agrave;o T&acirc;n l&agrave; t&ocirc;i</em></p>\r\n', '2024-11-26 13:02:12', 52, '21:01:00', '21:31:00'),
+(47, 2, '2024-11-28', 'cho_xac_nhan', '', '2024-11-26 13:08:15', 53, '22:08:00', '21:08:00'),
+(48, 11, '2024-11-27', 'hoan_thanh', '', '2024-11-27 04:19:18', 54, '05:19:18', '06:19:18');
 
 -- --------------------------------------------------------
 
@@ -351,7 +370,15 @@ INSERT INTO `lich_tiem` (`lich_tiem_id`, `khachhang_id`, `vaccin_id`, `ngay_tiem
 (13, 2, 1, '2024-11-10', 1, 'da_tiem', '', '2024-11-10 04:36:53'),
 (14, 11, 1, '2024-11-12', 1, 'da_tiem', '', '2024-11-16 14:05:48'),
 (15, 11, 1, '2024-11-08', 1, 'da_tiem', '', '2024-11-16 14:28:09'),
-(16, 2, 1, '2024-11-30', 1, 'da_tiem', '', '2024-11-24 03:15:38');
+(16, 2, 1, '2024-11-30', 1, 'da_tiem', '', '2024-11-24 03:15:38'),
+(17, 2, 1, '2024-11-26', 1, 'da_tiem', NULL, '2024-11-26 12:38:14'),
+(18, 2, 1, '2024-11-26', 1, 'cho_tiem', NULL, '2024-11-26 12:38:22'),
+(19, 8, 1, '2024-11-26', 1, 'da_tiem', NULL, '2024-11-26 12:38:32'),
+(20, 12, 2, '2024-11-26', 1, 'da_tiem', NULL, '2024-11-26 12:39:31'),
+(21, 12, 2, '2024-11-26', 1, 'cho_tiem', NULL, '2024-11-26 12:52:03'),
+(22, 12, 2, '2024-11-26', 1, 'cho_tiem', NULL, '2024-11-26 13:02:30'),
+(23, 2, 2, '2024-11-28', 1, 'huy', '', '2024-11-26 13:08:15'),
+(24, 11, 2, '2024-11-27', 1, 'da_tiem', NULL, '2024-11-27 04:19:18');
 
 -- --------------------------------------------------------
 
@@ -445,7 +472,8 @@ INSERT INTO `nguoithan` (`nguoithan_id`, `khachhang_id`, `fullname`, `quanhe`, `
 (6, 9, 'Ngân Thanh Tô', 'vo', '090009090', '22222', '4', '53', '1810'),
 (7, 11, 'nttantts@gmail.com', 'vo', '090009090', '090009090', '67', '664', '24712'),
 (8, 12, 'nttantts@gmail.com', 'vo', '090009094', 'ggdfg', '11', '98', '3244'),
-(9, 14, 'Ngân Thanh Tô', 'vo', '090009040', '22222', '67', '662', '24655');
+(9, 14, 'Ngân Thanh Tô', 'vo', '090009040', '22222', '67', '662', '24655'),
+(10, 15, 'Ngân Thanh Tô', 'khac', '090009090', '22222', '67', '664', '24703');
 
 -- --------------------------------------------------------
 
@@ -477,56 +505,58 @@ INSERT INTO `phan_quyen` (`id`, `vai_tro_id`, `chuc_nang_id`) VALUES
 (352, 25, 17),
 (353, 25, 18),
 (354, 25, 53),
-(452, 24, 56),
-(453, 24, 55),
-(454, 24, 54),
-(455, 24, 53),
-(456, 24, 52),
-(457, 24, 51),
-(458, 24, 50),
-(459, 24, 49),
-(460, 24, 48),
-(461, 24, 47),
-(462, 24, 46),
-(463, 24, 45),
-(464, 24, 44),
-(465, 24, 43),
-(466, 24, 42),
-(467, 24, 41),
-(468, 24, 40),
-(469, 24, 39),
-(470, 24, 38),
-(471, 24, 37),
-(472, 24, 36),
-(473, 24, 35),
-(474, 24, 34),
-(475, 24, 33),
-(476, 24, 32),
-(477, 24, 31),
-(478, 24, 30),
-(479, 24, 29),
-(480, 24, 28),
-(481, 24, 27),
-(482, 24, 26),
-(483, 24, 25),
-(484, 24, 24),
-(485, 24, 23),
-(486, 24, 22),
-(487, 24, 21),
-(488, 24, 20),
-(489, 24, 19),
-(490, 24, 18),
-(491, 24, 17),
-(492, 24, 16),
-(493, 24, 15),
-(494, 24, 14),
-(495, 24, 13),
-(496, 24, 12),
-(497, 24, 11),
-(498, 24, 10),
-(499, 24, 9),
-(500, 24, 8),
-(501, 24, 7);
+(553, 24, 58),
+(554, 24, 57),
+(555, 24, 56),
+(556, 24, 55),
+(557, 24, 54),
+(558, 24, 53),
+(559, 24, 52),
+(560, 24, 51),
+(561, 24, 50),
+(562, 24, 49),
+(563, 24, 48),
+(564, 24, 47),
+(565, 24, 46),
+(566, 24, 45),
+(567, 24, 44),
+(568, 24, 43),
+(569, 24, 42),
+(570, 24, 41),
+(571, 24, 40),
+(572, 24, 39),
+(573, 24, 38),
+(574, 24, 37),
+(575, 24, 36),
+(576, 24, 35),
+(577, 24, 34),
+(578, 24, 33),
+(579, 24, 32),
+(580, 24, 31),
+(581, 24, 30),
+(582, 24, 29),
+(583, 24, 28),
+(584, 24, 27),
+(585, 24, 26),
+(586, 24, 25),
+(587, 24, 24),
+(588, 24, 23),
+(589, 24, 22),
+(590, 24, 21),
+(591, 24, 20),
+(592, 24, 19),
+(593, 24, 18),
+(594, 24, 17),
+(595, 24, 16),
+(596, 24, 15),
+(597, 24, 14),
+(598, 24, 13),
+(599, 24, 12),
+(600, 24, 11),
+(601, 24, 10),
+(602, 24, 9),
+(603, 24, 8),
+(604, 24, 7);
 
 -- --------------------------------------------------------
 
@@ -632,7 +662,13 @@ INSERT INTO `thanh_toan` (`thanh_toan_id`, `lich_hen_id`, `dat_coc_id`, `so_tien
 (3, 17, 5, '8888.80', '2024-11-10', 'da_thanh_toan', 'Thanh toán hoàn tất'),
 (7, 27, 7, '11111.00', '2024-11-10', 'da_thanh_toan', NULL),
 (8, 28, 8, '8888.80', '2024-11-10', 'da_thanh_toan', 'Thanh toán hoàn tất'),
-(9, 29, 9, '11111.00', '2024-11-10', 'da_thanh_toan', 'Thanh toán hoàn tất');
+(9, 29, 9, '11111.00', '2024-11-10', 'da_thanh_toan', 'Thanh toán hoàn tất'),
+(10, 41, 47, '11111.00', '2024-11-26', 'da_thanh_toan', 'Thanh toán hoàn tất'),
+(11, 42, 48, '11111.00', '2024-11-26', 'chua_thanh_toan', NULL),
+(12, 43, 49, '2222.00', '2024-11-26', 'da_thanh_toan', 'Thanh toán hoàn tất'),
+(15, 46, 52, '1777.60', '2024-11-26', 'da_thanh_toan', 'Thanh toán hoàn tất'),
+(16, 47, 53, '2222.00', '2024-11-26', 'chua_thanh_toan', NULL),
+(17, 48, 54, '2222.00', '2024-11-27', 'chua_thanh_toan', NULL);
 
 -- --------------------------------------------------------
 
@@ -664,7 +700,9 @@ CREATE TABLE `vaccine` (
 --
 
 INSERT INTO `vaccine` (`vaccin_id`, `ten_vaccine`, `nha_san_xuat`, `loai_vaccine`, `so_lo_san_xuat`, `ngay_san_xuat`, `han_su_dung`, `ngay_nhap`, `mo_ta`, `gia_tien`, `so_luong`, `ghi_chu`, `benh_id`, `doi_tuong_id`, `phac_do_id`, `dieu_kien_id`) VALUES
-(1, 'Verorab 2', 'Sanofi Pasteur (Pháp)', 'tiem_mot_lan', '21221', '2024-11-21', '2024-11-23', '2024-11-07', '111', '11111.00', 106, '11', 1, 1, 1, 1);
+(1, 'Verorab 2', 'Sanofi Pasteur (Pháp)', 'tiem_mot_lan', '21221', '2024-11-21', '2024-11-23', '2024-11-07', '111', '11111.00', 106, '11', 1, 1, 1, 1),
+(2, 'Vắc lỏ', 'Sanofi Pasteur (Pháp)', 'tiem_mot_lan', '21221', '2024-11-13', '2024-11-30', '2024-11-26', '22', '2222.00', 22, '22', 1, 3, 1, 1),
+(4, '32', '32', 'tiem_mot_lan', '32', '2024-11-20', '2024-12-07', '2024-11-22', '2', '2.00', 2, '2', 1, 3, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -848,17 +886,17 @@ ALTER TABLE `vai_tro`
 -- AUTO_INCREMENT for table `benh`
 --
 ALTER TABLE `benh`
-  MODIFY `benh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `benh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `chuc_nang`
 --
 ALTER TABLE `chuc_nang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 --
 -- AUTO_INCREMENT for table `dang_ky_tiem_tai_nha`
 --
 ALTER TABLE `dang_ky_tiem_tai_nha`
-  MODIFY `dang_ky_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `dang_ky_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `danh_muc_benh`
 --
@@ -868,7 +906,7 @@ ALTER TABLE `danh_muc_benh`
 -- AUTO_INCREMENT for table `dat_coc`
 --
 ALTER TABLE `dat_coc`
-  MODIFY `dat_coc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `dat_coc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 --
 -- AUTO_INCREMENT for table `dieu_kien_tiem`
 --
@@ -883,17 +921,17 @@ ALTER TABLE `doi_tuong_tiem_chung`
 -- AUTO_INCREMENT for table `khachhang`
 --
 ALTER TABLE `khachhang`
-  MODIFY `khachhang_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `khachhang_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `lich_hen`
 --
 ALTER TABLE `lich_hen`
-  MODIFY `lich_hen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `lich_hen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 --
 -- AUTO_INCREMENT for table `lich_tiem`
 --
 ALTER TABLE `lich_tiem`
-  MODIFY `lich_tiem_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `lich_tiem_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `lieu_luong_tiem`
 --
@@ -913,12 +951,12 @@ ALTER TABLE `mat_khau_tam`
 -- AUTO_INCREMENT for table `nguoithan`
 --
 ALTER TABLE `nguoithan`
-  MODIFY `nguoithan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `nguoithan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `phan_quyen`
 --
 ALTER TABLE `phan_quyen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=502;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=605;
 --
 -- AUTO_INCREMENT for table `phan_ung_sau_tiem`
 --
@@ -938,12 +976,12 @@ ALTER TABLE `tai_khoan`
 -- AUTO_INCREMENT for table `thanh_toan`
 --
 ALTER TABLE `thanh_toan`
-  MODIFY `thanh_toan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `thanh_toan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `vaccine`
 --
 ALTER TABLE `vaccine`
-  MODIFY `vaccin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `vaccin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `vai_tro`
 --
