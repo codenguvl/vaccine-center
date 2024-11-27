@@ -92,7 +92,7 @@ foreach ($lich_tiem_list as $lich_tiem) {
                 <td><?php echo htmlspecialchars($lich_tiem['fullname'] ?? ''); ?></td>
                 <td><?php echo htmlspecialchars($lich_tiem['dienthoai'] ?? ''); ?></td>
                 <td><?php echo htmlspecialchars($lich_tiem['ten_vaccine'] ?? ''); ?></td>
-                <td><?php echo htmlspecialchars($lich_tiem['ngay_tiem'] ?? ''); ?></td>
+                <td><?php echo date('d-m-Y', strtotime($lich_tiem['ngay_tiem'])); ?></td>
                 <td><?php echo htmlspecialchars($lich_tiem['lan_tiem'] ?? ''); ?></td>
                 <td>
                     <?php
@@ -149,9 +149,6 @@ foreach ($lich_tiem_list as $lich_tiem) {
 
                                 <li><a
                                         href="index.php?page=lich-tiem-edit&id=<?php echo htmlspecialchars($lich_tiem['lich_tiem_id'] ?? ''); ?>">Sửa</a>
-                                </li>
-                                <li><a href="javascript:void(0);"
-                                        onclick="openDeleteModal('<?php echo htmlspecialchars($lich_tiem['lich_tiem_id'] ?? ''); ?>')">Xóa</a>
                                 </li>
                             </ul>
                         </div>

@@ -52,6 +52,7 @@ function getCustomPageTitle($page)
         'phac-do-tiem-list' => 'Danh sách phác đồ tiêm',
         'phac-do-tiem-add' => 'Thêm phác đồ tiêm',
         'phac-do-tiem-edit' => 'Sửa phác đồ tiêm',
+        'phac-do-tiem-detail' => 'Chi tiết phác đồ tiêm',
         // Điều kiện tiêm
         'dieu-kien-tiem-list' => 'Danh sách điều kiện tiêm',
         'dieu-kien-tiem-add' => 'Thêm điều kiện tiêm',
@@ -281,6 +282,9 @@ $page_title = getCustomPageTitle($current_page); // Lấy tiêu đề trang riê
                             break;
                         case 'phac-do-tiem-edit':
                             include 'views/phac_do_tiem/edit.php';
+                            break;
+                        case 'phac-do-tiem-detail':
+                            include 'views/phac_do_tiem/detail.php';
                             break;
                         case 'dieu-kien-tiem-list':
                             include 'views/dieu_kien_tiem/list.php';

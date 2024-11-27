@@ -114,6 +114,18 @@ $translatedStatus = isset($statusMap[$status]) ? $statusMap[$status] : $status;
             </div>
             <div>
                 <div class="info-item">
+                    <span class="info-title">Ngày giờ đăng ký</span>
+                    <p class="info-content">
+                        <?php
+                        $date = new DateTime($dang_ky_info['ngay_tao']);
+                        echo $date->format('d/m/Y H:i:s');
+                        ?>
+                    </p>
+                </div>
+            </div>
+
+            <div>
+                <div class="info-item">
                     <span class="info-title">Trạng thái</span>
                     <p class="info-content"><?php echo htmlspecialchars($translatedStatus); ?></p>
                 </div>
@@ -123,20 +135,20 @@ $translatedStatus = isset($statusMap[$status]) ? $statusMap[$status] : $status;
 </div>
 
 <style>
-.info-item {
-    margin-bottom: 15px;
-}
+    .info-item {
+        margin-bottom: 15px;
+    }
 
-.info-title {
-    display: block;
-    font-weight: bold;
-    font-size: 1.1rem;
-    color: #333;
-    margin-bottom: 5px;
-}
+    .info-title {
+        display: block;
+        font-weight: bold;
+        font-size: 1.1rem;
+        color: #333;
+        margin-bottom: 5px;
+    }
 
-.info-content {
-    font-size: 1rem;
-    color: #555;
-}
+    .info-content {
+        font-size: 1rem;
+        color: #555;
+    }
 </style>

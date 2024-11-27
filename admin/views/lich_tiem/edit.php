@@ -127,17 +127,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="uk-margin">
         <label class="uk-form-label" for="trang_thai">Trạng thái:</label>
         <div class="uk-form-controls">
+            <?php if ($lich_tiem['trang_thai'] === 'da_tiem' || $lich_tiem['trang_thai'] === 'huy'): ?>
+            <!-- Nếu trạng thái là 'Đã tiêm' hoặc 'Hủy', disable dropdown và hiển thị thông báo -->
+            <input class="uk-input" type="text"
+                value="<?php echo $lich_tiem['trang_thai'] === 'da_tiem' ? 'Đã tiêm' : 'Hủy'; ?>" disabled>
+            <?php else: ?>
             <select class="uk-select" id="trang_thai" name="trang_thai" required
                 onchange="toggleNextVaccination(this.value)">
-                <option value="cho_tiem" <?php echo ($lich_tiem['trang_thai'] == 'cho_tiem') ? 'selected' : ''; ?>>
-                    Chờ tiêm</option>
-                <option value="da_tiem" <?php echo ($lich_tiem['trang_thai'] == 'da_tiem') ? 'selected' : ''; ?>>
-                    Đã tiêm</option>
-                <option value="huy" <?php echo ($lich_tiem['trang_thai'] == 'huy') ? 'selected' : ''; ?>>
-                    Hủy</option>
+                <option value="cho_tiem" <?php echo ($lich_tiem['trang_thai'] == 'cho_tiem') ? 'selected' : ''; ?>>Chờ
+                    tiêm
+                </option>
+                <option value="da_tiem" <?php echo ($lich_tiem['trang_thai'] == 'da_tiem') ? 'selected' : ''; ?>>Đã tiêm
+                </option>
+                <option value="huy" <?php echo ($lich_tiem['trang_thai'] == 'huy') ? 'selected' : ''; ?>>Hủy</option>
             </select>
+            <?php endif; ?>
         </div>
     </div>
+
+
 
     <div id="next_vaccination_section" class="uk-margin" style="display: none;">
         <div class="uk-margin">

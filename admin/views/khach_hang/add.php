@@ -6,6 +6,24 @@ $message = '';
 $status = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!preg_match('/^\d{8,13}$/', $_POST['cccd'])) {
+        $status = 'danger';
+        $message = 'Số CCCD phải có từ 8 đến 13 chữ số.';
+        header("Location: index.php?page=khach-hang-add&id=" . $id . "&message=" . urlencode($message) . "&status=" . $status);
+        exit;
+    }
+    if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+        $message = 'Email không hợp lệ.';
+        $status = 'danger';
+        header(header: "Location: index.php?page=khach-hang-add&id=" . $id . "&message=" . urlencode($message) . "&status=" . $status);
+        exit;
+    }
+    if (!preg_match('/^\d{10,15}$/', $_POST['dienthoai'])) {
+        $message = 'Số điện thoại không hợp lệ.';
+        $status = 'danger';
+        header("Location: index.php?page=khach-hang-add&id=" . $id . "&message=" . urlencode($message) . "&status=" . $status);
+        exit;
+    }
     $result = $khachhang_controller->addKhachHangWithRelative(
         $_POST['fullname'],
         $_POST['cccd'],
@@ -47,11 +65,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <?php if ($message): ?>
-    <div class="uk-alert-<?php echo $status; ?>" uk-alert>
-        <a class="uk-alert-close" uk-close></a>
-        <p><?php echo $message; ?></p>
-    </div>
+<div class="uk-alert-<?php echo $status; ?>" uk-alert>
+    <a class="uk-alert-close" uk-close></a>
+    <p><?php echo $message; ?></p>
+</div>
 <?php endif; ?>
+
+<?php if (!empty($_GET['message'])): ?>
+<div class="uk-alert-<?php echo htmlspecialchars($_GET['status']); ?>" uk-alert>
+    <a class="uk-alert-close" uk-close></a>
+    <p><?php echo htmlspecialchars($_GET['message']); ?></p>
+</div>
+<?php endif; ?>
+
 
 <form class="uk-form-stacked" action="index.php?page=khach-hang-add" method="POST">
     <div class="uk-margin">
@@ -135,7 +161,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="uk-margin">
         <label class="uk-form-label" for="relative_quanhe">Quan hệ:</label>
         <div class="uk-form-controls">
-            <input class="uk-input" id="relative_quanhe" name="relative_quanhe" type="text">
+            <select class="uk-select" id="relative_quanhe" name="relative_quanhe" required>
+                <option value="">Chọn quan hệ</option>
+                <option value="vo">Vợ</option>
+                <option value="chong">Chồng</option>
+                <option value="con">Con</option>
+                <option value="bo">Bố</option>
+                <option value="me">Mẹ</option>
+                <option value="ong">Ông</option>
+                <option value="ba">Bà</option>
+                <option value="khac">Khác</option>
+            </select>
         </div>
     </div>
     <div class="uk-margin">
@@ -180,81 +216,81 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function () {
-        function fetchData(url) {
-            return $.getJSON(url);
-        }
+$(document).ready(function() {
+    function fetchData(url) {
+        return $.getJSON(url);
+    }
 
-        function populateSelect(selectElement, data) {
-            selectElement.empty().append('<option value="">Chọn</option>');
-            $.each(data, function (index, item) {
-                selectElement.append($('<option></option>').attr('value', item.id).text(item.name));
-            });
-        }
+    function populateSelect(selectElement, data) {
+        selectElement.empty().append('<option value="">Chọn</option>');
+        $.each(data, function(index, item) {
+            selectElement.append($('<option></option>').attr('value', item.id).text(item.name));
+        });
+    }
 
-        function setupAddressFields(provinceSelect, districtSelect, wardSelect) {
-            // Fetch provinces
-            fetchData('https://open.oapi.vn/location/provinces')
-                .done(function (response) {
-                    if (response.code === 'success') {
-                        populateSelect(provinceSelect, response.data);
-                    }
-                });
-
-            // Handle province change
-            provinceSelect.change(function () {
-                var provinceId = $(this).val();
-                if (provinceId) {
-                    districtSelect.prop('disabled', false);
-                    // Fetch districts for selected province
-                    fetchData(`https://open.oapi.vn/location/districts/${provinceId}`)
-                        .done(function (response) {
-                            if (response.code === 'success') {
-                                populateSelect(districtSelect, response.data);
-                            }
-                        });
-                } else {
-                    districtSelect.prop('disabled', true)
-                        .empty()
-                        .append('<option value="">Chọn Quận/Huyện</option>');
-                    wardSelect.prop('disabled', true)
-                        .empty()
-                        .append('<option value="">Chọn Xã/Phường</option>');
+    function setupAddressFields(provinceSelect, districtSelect, wardSelect) {
+        // Fetch provinces
+        fetchData('https://open.oapi.vn/location/provinces')
+            .done(function(response) {
+                if (response.code === 'success') {
+                    populateSelect(provinceSelect, response.data);
                 }
             });
 
-            // Handle district change
-            districtSelect.change(function () {
-                var districtId = $(this).val();
-                if (districtId) {
-                    wardSelect.prop('disabled', false);
-                    // Fetch wards for selected district
-                    fetchData(`https://open.oapi.vn/location/wards/${districtId}`)
-                        .done(function (response) {
-                            if (response.code === 'success') {
-                                populateSelect(wardSelect, response.data);
-                            }
-                        });
-                } else {
-                    wardSelect.prop('disabled', true)
-                        .empty()
-                        .append('<option value="">Chọn Xã/Phường</option>');
-                }
-            });
-        }
+        // Handle province change
+        provinceSelect.change(function() {
+            var provinceId = $(this).val();
+            if (provinceId) {
+                districtSelect.prop('disabled', false);
+                // Fetch districts for selected province
+                fetchData(`https://open.oapi.vn/location/districts/${provinceId}`)
+                    .done(function(response) {
+                        if (response.code === 'success') {
+                            populateSelect(districtSelect, response.data);
+                        }
+                    });
+            } else {
+                districtSelect.prop('disabled', true)
+                    .empty()
+                    .append('<option value="">Chọn Quận/Huyện</option>');
+                wardSelect.prop('disabled', true)
+                    .empty()
+                    .append('<option value="">Chọn Xã/Phường</option>');
+            }
+        });
 
-        // Setup địa chỉ khách hàng
-        setupAddressFields(
-            $('#tinh_thanh'),
-            $('#huyen'),
-            $('#xa_phuong')
-        );
+        // Handle district change
+        districtSelect.change(function() {
+            var districtId = $(this).val();
+            if (districtId) {
+                wardSelect.prop('disabled', false);
+                // Fetch wards for selected district
+                fetchData(`https://open.oapi.vn/location/wards/${districtId}`)
+                    .done(function(response) {
+                        if (response.code === 'success') {
+                            populateSelect(wardSelect, response.data);
+                        }
+                    });
+            } else {
+                wardSelect.prop('disabled', true)
+                    .empty()
+                    .append('<option value="">Chọn Xã/Phường</option>');
+            }
+        });
+    }
 
-        // Setup địa chỉ người thân
-        setupAddressFields(
-            $('#relative_tinh_thanh'),
-            $('#relative_huyen'),
-            $('#relative_xa_phuong')
-        );
-    });
+    // Setup địa chỉ khách hàng
+    setupAddressFields(
+        $('#tinh_thanh'),
+        $('#huyen'),
+        $('#xa_phuong')
+    );
+
+    // Setup địa chỉ người thân
+    setupAddressFields(
+        $('#relative_tinh_thanh'),
+        $('#relative_huyen'),
+        $('#relative_xa_phuong')
+    );
+});
 </script>

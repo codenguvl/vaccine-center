@@ -160,10 +160,12 @@ $has_deposit = !empty($lich_hen['dat_coc_id']);
         <div class="uk-form-controls">
             <select class="uk-select" id="trang_thai" name="trang_thai" required>
                 <option value="cho_xac_nhan"
-                    <?php echo ($lich_hen['trang_thai'] === 'cho_xac_nhan') ? 'selected' : ''; ?>>Chờ xác nhận
+                    <?php echo ($lich_hen['trang_thai'] === 'cho_xac_nhan') ? 'selected' : ''; ?>>Chờ
+                    xác nhận
                 </option>
                 <option value="da_xac_nhan"
-                    <?php echo ($lich_hen['trang_thai'] === 'da_xac_nhan') ? 'selected' : ''; ?>>Đã xác nhận
+                    <?php echo ($lich_hen['trang_thai'] === 'da_xac_nhan') ? 'selected' : ''; ?>>Đã
+                    xác nhận
                 </option>
                 <option value="da_huy" <?php echo ($lich_hen['trang_thai'] === 'da_huy') ? 'selected' : ''; ?>>Đã hủy
                 </option>
@@ -172,7 +174,6 @@ $has_deposit = !empty($lich_hen['dat_coc_id']);
             </select>
         </div>
     </div>
-
     <div class="uk-margin">
         <div class="uk-form-controls">
             <label><input class="uk-checkbox" type="checkbox" name="has_deposit" value="1"
@@ -368,6 +369,15 @@ document.getElementById('gio_bat_dau').addEventListener('change', function() {
         let hours = gioKetThuc.getHours().toString().padStart(2, '0');
         let minutes = gioKetThuc.getMinutes().toString().padStart(2, '0');
         document.getElementById('gio_ket_thuc').value = `${hours}:${minutes}`;
+    }
+});
+
+
+
+window.addEventListener('DOMContentLoaded', function() {
+    var trangThai = document.getElementById('trang_thai');
+    if (trangThai.value === 'hoan_thanh') {
+        trangThai.disabled = true;
     }
 });
 </script>

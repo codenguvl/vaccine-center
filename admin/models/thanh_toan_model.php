@@ -195,7 +195,7 @@ class ThanhToanModel
             // 4. Tạo lịch tiêm
             if ($tiem_ngay) {
                 $sql = "INSERT INTO lich_tiem (khachhang_id, vaccin_id, ngay_tiem, lan_tiem, trang_thai) 
-                    VALUES (?, ?, CURRENT_DATE, 1, 'da_tiem')";
+                    VALUES (?, ?, CURRENT_DATE, 1, 'cho_tiem')";
                 $stmt = $this->conn->prepare($sql);
                 $stmt->bind_param("ii", $khachhang_id, $vaccine_id);
             } else {

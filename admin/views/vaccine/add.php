@@ -137,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="uk-margin">
         <label class="uk-form-label" for="benh_id">Bệnh:</label>
         <div class="uk-form-controls">
-            <select class="uk-select" id="benh_id" name="benh_id">
+            <select class="uk-select" id="benh_id" name="benh_id" required>
                 <option value="">Chọn bệnh</option>
                 <?php foreach ($benh_list as $benh): ?>
                     <option value="<?php echo $benh['benh_id']; ?>">
@@ -151,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="uk-margin">
         <label class="uk-form-label" for="doi_tuong_id">Đối tượng tiêm chủng:</label>
         <div class="uk-form-controls">
-            <select class="uk-select" id="doi_tuong_id" name="doi_tuong_id">
+            <select class="uk-select" id="doi_tuong_id" name="doi_tuong_id" required>
                 <option value="">Chọn đối tượng</option>
                 <?php foreach ($doi_tuong_list as $doi_tuong): ?>
                     <option value="<?php echo $doi_tuong['doi_tuong_id']; ?>">
@@ -165,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="uk-margin">
         <label class="uk-form-label" for="phac_do_id">Phác đồ tiêm:</label>
         <div class="uk-form-controls">
-            <select class="uk-select" id="phac_do_id" name="phac_do_id">
+            <select class="uk-select" id="phac_do_id" name="phac_do_id" required>
                 <option value="">Chọn phác đồ</option>
                 <?php foreach ($phac_do_list as $phac_do): ?>
                     <option value="<?php echo $phac_do['phac_do_id']; ?>">
@@ -179,7 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="uk-margin">
         <label class="uk-form-label" for="dieu_kien_id">Điều kiện tiêm:</label>
         <div class="uk-form-controls">
-            <select class="uk-select" id="dieu_kien_id" name="dieu_kien_id">
+            <select class="uk-select" id="dieu_kien_id" name="dieu_kien_id" required>
                 <option value="">Chọn điều kiện</option>
                 <?php foreach ($dieu_kien_list as $dieu_kien): ?>
                     <option value="<?php echo $dieu_kien['dieu_kien_id']; ?>">
@@ -197,4 +197,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     const formattedDate = today.toISOString().split('T')[0];
 
     document.getElementById('ngay_nhap').value = formattedDate;
+</script>
+
+<script>
+    // Lấy các phần tử ngày sản xuất và hạn sử dụng
+    const ngaySanXuat = document.getElementById('ngay_san_xuat');
+    const hanSuDung = document.getElementById('han_su_dung');
+
+    // Hàm cập nhật giá trị min của hạn sử dụng
+    function updateMinDate() {
+        // Lấy ngày sản xuất và thiết lập min cho hạn sử dụng
+        const ngaySanXuatValue = ngaySanXuat.value;
+
+        // Nếu người dùng đã chọn ngày sản xuất, cập nhật min của ngày hết hạn
+        if (ngaySanXuatValue) {
+            hanSuDung.setAttribute('min', ngaySanXuatValue);
+        }
+    }
+
+    // Gọi hàm khi người dùng chọn ngày sản xuất
+    ngaySanXuat.addEventListener('change', updateMinDate);
+
+    // Khởi tạo giá trị min cho hạn sử dụng ngay khi trang được tải
+    updateMinDate();
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Lấy các phần tử ngày sản xuất, hạn sử dụng, và ngày nhập
+        const ngaySanXuat = document.getElementById("ngay_san_xuat");
+        const hanSuDung = document.getElementById("han_su_dung");
+        const ngayNhap = document.getElementById("ngay_nhap");
+
+        // Hàm cập nhật giá trị min và max cho ngày nhập
+        function updateNgayNhapRange() {
+            const ngaySanXuatValue = ngaySanXuat.value;
+            const hanSuDungValue = hanSuDung.value;
+
+            if (ngaySanXuatValue && hanSuDungValue) {
+                // Cập nhật min và max cho ngày nhập
+                ngayNhap.min = ngaySanXuatValue;
+                ngayNhap.max = hanSuDungValue;
+            }
+        }
+
+        // Thực thi hàm khi ngày sản xuất hoặc hạn sử dụng thay đổi
+        ngaySanXuat.addEventListener("change", updateNgayNhapRange);
+        hanSuDung.addEventListener("change", updateNgayNhapRange);
+
+        // Cập nhật ngày nhập khi trang được tải
+        updateNgayNhapRange();
+    });
 </script>

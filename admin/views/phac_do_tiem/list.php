@@ -49,6 +49,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id'
             <td><?php echo isset($phac_do['lieu_luong_mo_ta']) ? htmlspecialchars($phac_do['lieu_luong_mo_ta']) : ''; ?>
             </td>
             <td>
+                <a href="index.php?page=phac-do-tiem-detail&id=<?php echo isset($phac_do['phac_do_id']) ? htmlspecialchars($phac_do['phac_do_id']) : ''; ?>"
+                    class="uk-button uk-button-primary uk-button-small">Chi tiết</a>
                 <a href="index.php?page=phac-do-tiem-edit&id=<?php echo isset($phac_do['phac_do_id']) ? htmlspecialchars($phac_do['phac_do_id']) : ''; ?>"
                     class="uk-button uk-button-primary uk-button-small">Sửa</a>
                 <button class="uk-button uk-button-danger uk-button-small"

@@ -134,9 +134,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update_status' && isset($_PO
                         </li>
                         <li><a href="javascript:void(0)"
                                 onclick="openDeleteModal('<?php echo $lich_hen['lich_hen_id']; ?>')">Xóa</a></li>
+                        <?php if ($lich_hen['trang_thai'] != 'hoan_thanh'): ?>
                         <li><a href="javascript:void(0)"
                                 onclick="openUpdateStatusModal('<?php echo $lich_hen['lich_hen_id']; ?>')">Cập nhật
                                 trạng thái</a></li>
+                        <?php endif; ?>
                         <li><a href="javascript:void(0)"
                                 onclick="sendReminder('<?php echo $lich_hen['dienthoai']; ?>', '<?php echo $lich_hen['email']; ?>', '<?php echo $lich_hen['ngay_hen']; ?>', '<?php echo $lich_hen['gio_bat_dau']; ?>')">Gửi
                                 nhắc nhở</a></li>
@@ -161,7 +163,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update_status' && isset($_PO
                     <option value="cho_xac_nhan">Chờ xác nhận</option>
                     <option value="da_xac_nhan">Đã xác nhận</option>
                     <option value="da_huy">Đã hủy</option>
-                    <option value="hoan_thanh">Hoàn thành</option>
                 </select>
             </div>
             <p class="uk-text-right">

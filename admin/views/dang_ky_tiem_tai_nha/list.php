@@ -59,7 +59,7 @@ function mapStatusToVietnamese($status)
         <?php foreach ($dang_ky_list as $dang_ky): ?>
         <tr>
             <td><?php echo htmlspecialchars($dang_ky['ho_ten']); ?></td>
-            <td><?php echo htmlspecialchars($dang_ky['ngay_sinh']); ?></td>
+            <td><?php echo date('d-m-Y', strtotime($dang_ky['ngay_sinh'])); ?></td>
             <td><?php echo htmlspecialchars($dang_ky['gioi_tinh']); ?></td>
             <td><?php echo htmlspecialchars($dang_ky['dia_chi']); ?></td>
             <td><?php echo htmlspecialchars(mapStatusToVietnamese($dang_ky['trang_thai'])); ?></td>

@@ -42,6 +42,7 @@ function getBreadcrumbTitle($page)
         'phac-do-tiem-list' => 'Danh sách phác đồ tiêm',
         'phac-do-tiem-add' => 'Thêm phác đồ tiêm',
         'phac-do-tiem-edit' => 'Sửa phác đồ tiêm',
+        'phac-do-tiem-detail' => 'Chi tiết phác đồ tiêm',
         // Điều kiện tiêm
         'dieu-kien-tiem-list' => 'Danh sách điều kiện tiêm',
         'dieu-kien-tiem-add' => 'Thêm điều kiện tiêm',
@@ -110,6 +111,7 @@ function getParentPage($page)
         // Phác đồ tiêm
         'phac-do-tiem-add' => 'phac-do-tiem-list',
         'phac-do-tiem-edit' => 'phac-do-tiem-list',
+        'phac-do-tiem-detail' => 'phac-do-tiem-list',
         // Điều kiện tiêm
         'dieu-kien-tiem-add' => 'dieu-kien-tiem-list',
         'dieu-kien-tiem-edit' => 'dieu-kien-tiem-list',

@@ -219,8 +219,8 @@ if (isset($_POST['filter'])) {
                 ?></td>
 
                 <td><?php echo htmlspecialchars($vaccine['so_lo_san_xuat']); ?></td>
-                <td><?php echo htmlspecialchars($vaccine['ngay_san_xuat']); ?></td>
-                <td><?php echo htmlspecialchars($vaccine['han_su_dung']); ?></td>
+                <td><?php echo date('d-m-Y', strtotime($vaccine['ngay_san_xuat'])); ?></td>
+                <td><?php echo date('d-m-Y', strtotime($vaccine['han_su_dung'])); ?></td>
                 <td><?php echo number_format($vaccine['gia_tien'], 0, ',', '.'); ?> đ</td>
                 <td><?php echo htmlspecialchars($vaccine['so_luong']); ?></td>
                 <td><?php echo htmlspecialchars($vaccine['ten_benh']); ?></td>

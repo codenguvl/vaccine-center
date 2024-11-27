@@ -11,6 +11,24 @@ if (!$khachhang) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!preg_match('/^\d{8,13}$/', $_POST['cccd'])) {
+        $status = 'danger';
+        $message = 'Số CCCD phải có từ 8 đến 13 chữ số.';
+        header("Location: index.php?page=khach-hang-edit&id=" . $id . "&message=" . urlencode($message) . "&status=" . $status);
+        exit;
+    }
+    if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+        $message = 'Email không hợp lệ.';
+        $status = 'danger';
+        header(header: "Location: index.php?page=khach-hang-edit&id=" . $id . "&message=" . urlencode($message) . "&status=" . $status);
+        exit;
+    }
+    if (!preg_match('/^\d{10,15}$/', $_POST['dienthoai'])) {
+        $message = 'Số điện thoại không hợp lệ.';
+        $status = 'danger';
+        header("Location: index.php?page=khach-hang-edit&id=" . $id . "&message=" . urlencode($message) . "&status=" . $status);
+        exit;
+    }
     $result = $khachhang_controller->updateKhachHangWithRelative(
         $id,
         $_POST['fullname'],
@@ -44,6 +62,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="uk-alert-<?php echo $status; ?>" uk-alert>
     <a class="uk-alert-close" uk-close></a>
     <p><?php echo $message; ?></p>
+</div>
+<?php endif; ?>
+
+<?php if (!empty($_GET['message'])): ?>
+<div class="uk-alert-<?php echo htmlspecialchars($_GET['status']); ?>" uk-alert>
+    <a class="uk-alert-close" uk-close></a>
+    <p><?php echo htmlspecialchars($_GET['message']); ?></p>
 </div>
 <?php endif; ?>
 
@@ -140,8 +165,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="uk-margin">
         <label class="uk-form-label" for="relative_quanhe">Quan hệ:</label>
         <div class="uk-form-controls">
-            <input class="uk-input" id="relative_quanhe" name="relative_quanhe" type="text"
-                value="<?php echo htmlspecialchars($nguoithan['quanhe'] ?? ''); ?>">
+            <select class="uk-select" id="relative_quanhe" name="relative_quanhe" required>
+                <option value="">Chọn quan hệ</option>
+                <option value="vo"
+                    <?php echo (isset($nguoithan['quanhe']) && $nguoithan['quanhe'] == 'vo') ? 'selected' : ''; ?>>Vợ
+                </option>
+                <option value="chong"
+                    <?php echo (isset($nguoithan['quanhe']) && $nguoithan['quanhe'] == 'chong') ? 'selected' : ''; ?>>
+                    Chồng</option>
+                <option value="con"
+                    <?php echo (isset($nguoithan['quanhe']) && $nguoithan['quanhe'] == 'con') ? 'selected' : ''; ?>>Con
+                </option>
+                <option value="bo"
+                    <?php echo (isset($nguoithan['quanhe']) && $nguoithan['quanhe'] == 'bo') ? 'selected' : ''; ?>>Bố
+                </option>
+                <option value="me"
+                    <?php echo (isset($nguoithan['quanhe']) && $nguoithan['quanhe'] == 'me') ? 'selected' : ''; ?>>Mẹ
+                </option>
+                <option value="ong"
+                    <?php echo (isset($nguoithan['quanhe']) && $nguoithan['quanhe'] == 'ong') ? 'selected' : ''; ?>>Ông
+                </option>
+                <option value="ba"
+                    <?php echo (isset($nguoithan['quanhe']) && $nguoithan['quanhe'] == 'ba') ? 'selected' : ''; ?>>Bà
+                </option>
+                <option value="khac"
+                    <?php echo (isset($nguoithan['quanhe']) && $nguoithan['quanhe'] == 'khac') ? 'selected' : ''; ?>>
+                    Khác</option>
+            </select>
         </div>
     </div>
     <div class="uk-margin">

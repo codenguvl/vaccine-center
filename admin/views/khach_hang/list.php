@@ -50,8 +50,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['id'
         <tr>
             <td><?php echo htmlspecialchars($khachhang['fullname']); ?></td>
             <td><?php echo htmlspecialchars($khachhang['cccd']); ?></td>
-            <td><?php echo htmlspecialchars($khachhang['ngaysinh']); ?></td>
-            <td><?php echo htmlspecialchars($khachhang['gioitinh']); ?></td>
+            <td><?php echo date('d-m-Y', strtotime($khachhang['ngaysinh'])); ?></td>
+
+            <td>
+                <?php
+                    echo ($khachhang['gioitinh'] === 'nam') ? 'Nam' : (($khachhang['gioitinh'] === 'nu') ? 'Nữ' : 'Không xác định');
+                    ?>
+            </td>
+
             <td><?php echo htmlspecialchars($khachhang['dienthoai']); ?></td>
             <td><?php echo htmlspecialchars($khachhang['diachi']); ?></td>
             <td>

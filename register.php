@@ -18,16 +18,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dien_thoai_lien_he = $_POST['contact_phone'];
     $ngay_mong_muon = $_POST['preferred_date'];
 
-    $result = $dangKyController->addDangKy($ho_ten, $ngay_sinh, $gioi_tinh, $tinh_thanh, $quan_huyen, $phuong_xa, $dia_chi, $ho_ten_lien_he, $quan_he, $dien_thoai_lien_he, $ngay_mong_muon);
+    // Validate phone number format
+    if (!preg_match('/^\d{10,15}$/', $dien_thoai_lien_he)) {
+        $error_message = "Số điện thoại không hợp lệ. Vui lòng nhập lại.";
+    }
 
-    if ($result) {
-        $success_message = "Đăng ký thành công!";
-    } else {
-        $error_message = "Đăng ký không thành công. Vui lòng thử lại.";
+    // Validate preferred date
+    elseif (strtotime($ngay_mong_muon) < time()) {
+        $error_message = "Ngày mong muốn tiêm không được trước ngày hiện tại.";
+    }
+
+    // Only insert if there are no validation errors
+    if (!isset($error_message)) {
+        $result = $dangKyController->addDangKy($ho_ten, $ngay_sinh, $gioi_tinh, $tinh_thanh, $quan_huyen, $phuong_xa, $dia_chi, $ho_ten_lien_he, $quan_he, $dien_thoai_lien_he, $ngay_mong_muon);
+
+        if ($result) {
+            $success_message = "Đăng ký thành công!";
+        } else {
+            $error_message = "Đăng ký không thành công. Vui lòng thử lại.";
+        }
     }
 }
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -80,17 +93,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             class="uk-margin-bottom uk-card uk-card-body uk-card-default uk-width-2xlarge uk-margin-auto-left uk-margin-auto-right uk-margin-top">
             <!-- Thông tin người tiêm -->
             <?php if (isset($success_message)): ?>
-            <div class="uk-alert-success" uk-alert>
-                <a class="uk-alert-close" uk-close></a>
-                <p><?php echo $success_message; ?></p>
-            </div>
+                <div class="uk-alert-success" uk-alert>
+                    <a class="uk-alert-close" uk-close></a>
+                    <p><?php echo $success_message; ?></p>
+                </div>
             <?php endif; ?>
 
             <?php if (isset($error_message)): ?>
-            <div class="uk-alert-danger" uk-alert>
-                <a class="uk-alert-close" uk-close></a>
-                <p><?php echo $error_message; ?></p>
-            </div>
+                <div class="uk-alert-danger" uk-alert>
+                    <a class="uk-alert-close" uk-close></a>
+                    <p><?php echo $error_message; ?></p>
+                </div>
             <?php endif; ?>
             <fieldset class="uk-fieldset">
                 <legend class="uk-heading-small uk-text-center">ĐĂNG KÝ & ĐẶT LỊCH TIÊM CHỦNG NGAY</legend>
@@ -162,6 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <option value="ong">Ông</option>
                         <option value="ba">Bà</option>
                         <option value="khac">Khác</option>
+                        <option value="ban_than">Bản Thân</option>
                     </select>
                 </div>
                 <div class="uk-margin">
@@ -190,75 +204,75 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </body>
 <script>
-const provinceSelect = document.getElementById('province');
-const districtSelect = document.getElementById('district');
-const wardSelect = document.getElementById('ward');
+    const provinceSelect = document.getElementById('province');
+    const districtSelect = document.getElementById('district');
+    const wardSelect = document.getElementById('ward');
 
-// API URLs
-const API_BASE = 'https://open.oapi.vn/location';
-const PROVINCE_API = `${API_BASE}/provinces?page=0&size=30`;
-const DISTRICT_API = `${API_BASE}/districts`;
-const WARD_API = `${API_BASE}/wards`;
+    // API URLs
+    const API_BASE = 'https://open.oapi.vn/location';
+    const PROVINCE_API = `${API_BASE}/provinces?page=0&size=30`;
+    const DISTRICT_API = `${API_BASE}/districts`;
+    const WARD_API = `${API_BASE}/wards`;
 
-// Fetch provinces
-async function fetchProvinces() {
-    const response = await fetch(PROVINCE_API);
-    const data = await response.json();
-    if (data && data.code === 'success') {
-        populateSelect(provinceSelect, data.data, "Chọn Tỉnh Thành");
+    // Fetch provinces
+    async function fetchProvinces() {
+        const response = await fetch(PROVINCE_API);
+        const data = await response.json();
+        if (data && data.code === 'success') {
+            populateSelect(provinceSelect, data.data, "Chọn Tỉnh Thành");
+        }
     }
-}
 
-// Fetch districts based on provinceId
-async function fetchDistricts(provinceId) {
-    const response = await fetch(`${DISTRICT_API}/${provinceId}?page=0&size=30`);
-    const data = await response.json();
-    if (data && data.code === 'success') {
-        populateSelect(districtSelect, data.data, "Chọn Quận Huyện");
+    // Fetch districts based on provinceId
+    async function fetchDistricts(provinceId) {
+        const response = await fetch(`${DISTRICT_API}/${provinceId}?page=0&size=30`);
+        const data = await response.json();
+        if (data && data.code === 'success') {
+            populateSelect(districtSelect, data.data, "Chọn Quận Huyện");
+        }
     }
-}
 
-// Fetch wards based on districtId
-async function fetchWards(districtId) {
-    const response = await fetch(`${WARD_API}/${districtId}?page=0&size=30`);
-    const data = await response.json();
-    if (data && data.code === 'success') {
-        populateSelect(wardSelect, data.data, "Chọn Phường Xã");
+    // Fetch wards based on districtId
+    async function fetchWards(districtId) {
+        const response = await fetch(`${WARD_API}/${districtId}?page=0&size=30`);
+        const data = await response.json();
+        if (data && data.code === 'success') {
+            populateSelect(wardSelect, data.data, "Chọn Phường Xã");
+        }
     }
-}
 
-// Populate a select element with options
-function populateSelect(selectElement, data, placeholder) {
-    selectElement.innerHTML = `<option value="">${placeholder}</option>`;
-    data.forEach(item => {
-        const option = document.createElement('option');
-        option.value = item.id;
-        option.textContent = item.name;
-        selectElement.appendChild(option);
+    // Populate a select element with options
+    function populateSelect(selectElement, data, placeholder) {
+        selectElement.innerHTML = `<option value="">${placeholder}</option>`;
+        data.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.id;
+            option.textContent = item.name;
+            selectElement.appendChild(option);
+        });
+        selectElement.disabled = false;
+    }
+
+    // Event listeners
+    provinceSelect.addEventListener('change', () => {
+        const provinceId = provinceSelect.value;
+        districtSelect.disabled = true;
+        wardSelect.disabled = true;
+        if (provinceId) {
+            fetchDistricts(provinceId);
+        }
     });
-    selectElement.disabled = false;
-}
 
-// Event listeners
-provinceSelect.addEventListener('change', () => {
-    const provinceId = provinceSelect.value;
-    districtSelect.disabled = true;
-    wardSelect.disabled = true;
-    if (provinceId) {
-        fetchDistricts(provinceId);
-    }
-});
+    districtSelect.addEventListener('change', () => {
+        const districtId = districtSelect.value;
+        wardSelect.disabled = true;
+        if (districtId) {
+            fetchWards(districtId);
+        }
+    });
 
-districtSelect.addEventListener('change', () => {
-    const districtId = districtSelect.value;
-    wardSelect.disabled = true;
-    if (districtId) {
-        fetchWards(districtId);
-    }
-});
-
-// Initialize provinces on page load
-fetchProvinces();
+    // Initialize provinces on page load
+    fetchProvinces();
 </script>
 
 </html>
