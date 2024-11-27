@@ -15,6 +15,7 @@ class LichHenModel
                 JOIN khachhang kh ON lh.khachhang_id = kh.khachhang_id
                 LEFT JOIN dat_coc dc ON lh.dat_coc_id = dc.dat_coc_id
                 LEFT JOIN vaccine v ON dc.vaccine_id = v.vaccin_id
+                WHERE lh.ghi_chu != 'Được tạo tự động từ thanh toán'  -- {{ edit_1 }}
                 ORDER BY lh.lich_hen_id DESC";
         $result = $this->conn->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);

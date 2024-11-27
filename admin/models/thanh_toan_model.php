@@ -154,7 +154,7 @@ class ThanhToanModel
         }
     }
 
-    public function addThanhToanAndLichTiem($khachhang_id, $vaccine_id, $so_tien_con_lai, $ngay_hen = null, $gio_bat_dau = null, $gio_ket_thuc = null, $ghi_chu = '', $tiem_ngay = true)
+    public function addThanhToanAndLichTiem($khachhang_id, $vaccine_id, $so_tien_con_lai, $ngay_hen = null, $gio_bat_dau = null, $gio_ket_thuc = null, $ghi_chu = 'Được tạo tự động từ lịch tiêm', $tiem_ngay = true)
     {
         $this->conn->begin_transaction();
         try {
@@ -173,6 +173,9 @@ class ThanhToanModel
             $ngay = $tiem_ngay ? date('Y-m-d') : $ngay_hen;
             $gioBatDau = $tiem_ngay ? date('H:i:s') : $gio_bat_dau;
             $gioKetThuc = $tiem_ngay ? date('H:i:s', strtotime('+1 hour')) : $gio_ket_thuc; // Assuming 1 hour duration
+
+            // Ghi chú được tạo tự động từ thanh toán
+            $ghi_chu = $tiem_ngay ? 'Được tạo tự động từ thanh toán' : $ghi_chu;
 
             $sql = "INSERT INTO lich_hen (khachhang_id, ngay_hen, gio_bat_dau, gio_ket_thuc, trang_thai, ghi_chu, dat_coc_id) 
                     VALUES (?, ?, ?, ?, ?, ?, ?)";
